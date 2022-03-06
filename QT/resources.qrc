@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>weed.jpg</file>
+        <file>top_farmer.png</file>
+    </qresource>
+</RCC>
