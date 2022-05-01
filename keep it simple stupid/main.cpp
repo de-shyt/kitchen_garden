@@ -3,25 +3,29 @@
 #include "Player.h"
 #include "View.h"
 
-void menu(sf::RenderWindow& window);
 
 int main() {
 
-    enum class ViewType{ Map, Shop, Chat };
-    auto CurrentView = ViewType::Map;
+    enum class ViewType{ Map, Shop, Chat, Menu };
+    
+    auto CurrentView = ViewType::Menu;
 
     View.reset(sf::FloatRect(0, 0, 1920, 1080));
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "POTATO SIMULATOR");
 
-    menu(window);
-
     try
     {
+        
 //============================================== Creating Elems ==============================================
 
-        BaseElem MapBackground = BaseElem(0, 0, 2048, 2048, "weedcropped.jpg");
+        BaseElem NewGame = BaseElem(100, 30, 169, 39, "NewGameIcon.png");
+        BaseElem Exit = BaseElem(100, 90, 110, 41, "ExitIcon.png");
+        BaseElem Carrot = BaseElem(300, -20, 918, 950, "CarrotIcon.png");
+        Carrot.mSprite.setRotation(15);
+
+        BaseElem MapBackground = BaseElem(0, 0, 2048, 2048, "GrassBG.png");
         BaseElem ShopBackground = BaseElem(0, 0, 2048, 2048, "ShopBG.png");
-        Player Cat = Player(860, 440, 50, 92, 4, 8, "player.png");
+        Player Cat = Player(860, 440, 50, 92, 4, 8, "PlayerIcon.png");
         BaseElem Pause = BaseElem(1770, 50, 100, 100, "PauseIcon.png");
         BaseElem Close = BaseElem(1770, 50, 100, 100, "CloseIcon.png");
         BaseElem Shop = BaseElem(50, 50, 100, 100, "ShopIcon.png");
@@ -72,10 +76,10 @@ int main() {
                                 CurrentView = ViewType::Shop;
                             }
                             else if (Pause.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                                return 0;
+                                CurrentView = ViewType::Menu;
                             }
                             else if (Chat.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                                CurrentView = ViewType::Chat;
+                                CurrentView = ViewType::Menu;
                             }
                         }
 
@@ -86,10 +90,20 @@ int main() {
                             }
                         }
 
-                        else // if (CurrentView == ViewType::Chat)
+                        else if (CurrentView == ViewType::Chat)
                         {
                             if (Close.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
                                 CurrentView = ViewType::Map;
+                            }
+                        }
+
+                        else // if (CurrentView == ViewType::Menu)
+                        {
+                            if (NewGame.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
+                                CurrentView = ViewType::Map;
+                            }
+                            else if (Exit.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
+                                return 0;
                             }
                         }
                     }
@@ -109,6 +123,15 @@ int main() {
                     Cat.GoDown(CurrentFrame, time);
             }
 
+            if (CurrentView == ViewType::Menu) {
+                if (sf::IntRect(100, 30, 170, 60).contains(sf::Mouse::getPosition(window))) {
+                    NewGame.mSprite.setColor(sf::Color::Blue);
+                }
+                if (sf::IntRect(100, 90, 170, 50).contains(sf::Mouse::getPosition(window))) {
+                    Exit.mSprite.setColor(sf::Color::Blue);
+                }
+            }
+
 
 //============================================== Draw ========================================================
 
@@ -124,8 +147,8 @@ int main() {
             if (CurrentView == ViewType::Map) {
                 for(int i = 0; i < 20; ++i) {
                     for(int j = 0; j < 20; ++j) {
-                        MapBackground.mSprite.setTextureRect(sf::IntRect(0, 0, 333, 333));
-                        MapBackground.mSprite.setPosition(j * 333, i * 333);
+                        MapBackground.mSprite.setTextureRect(sf::IntRect(0, 0, 346, 333));
+                        MapBackground.mSprite.setPosition(j * 346, i * 333);
                         window.draw(MapBackground.mSprite);
                     }
                 }
@@ -133,15 +156,20 @@ int main() {
                 window.draw(Shop.mSprite);
                 window.draw(Chat.mSprite);
                 window.draw(Pause.mSprite);
-
             }
             else if (CurrentView == ViewType::Shop) {
                 window.draw(ShopBackground.mSprite);
                 window.draw(Close.mSprite);
             }
-            else { // if (CurrentView == ViewType::Chat)
+            else if (CurrentView == ViewType::Chat) {
                 window.draw(Close.mSprite);
             }
+            else { // if (CurrentView == ViewType::Menu)
+                window.draw(Carrot.mSprite);
+                window.draw(NewGame.mSprite);
+                window.draw(Exit.mSprite);
+            }
+
 
 //============================================= Display ==============================================================
 
