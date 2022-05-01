@@ -33,8 +33,12 @@ struct Player : BaseElem {
     Direction dir = Direction::Right;
 
     Player();
-    explicit Player(float x_, float y_, float w_, float h_, std::string&& name);
+    explicit Player(float x_, float y_, float w_, float h_, float recTop, float recLeft, std::string&& name);
     void update(float time);
+    void GoLeft(float &CurrentFrame, float &time);
+    void GoRight(float &CurrentFrame, float &time);
+    void GoUp(float &CurrentFrame, float &time);
+    void GoDown(float &CurrentFrame, float &time);
 };
 
 
