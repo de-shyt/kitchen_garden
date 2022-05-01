@@ -14,7 +14,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "POTATO SIMULATOR");
 
     menu(window);
-
+    
     try
     {
 //============================================== Creating Elems ==============================================
@@ -24,8 +24,8 @@ int main() {
         Player Cat = Player(860, 440, 50, 92, 4, 8, "player.png");
         BaseElem Pause = BaseElem(1770, 50, 100, 100, "PauseIcon.png");
         BaseElem Close = BaseElem(1770, 50, 100, 100, "CloseIcon.png");
-        BaseElem Shop = BaseElem(50, 200, 100, 100, "ShopIcon.png");
-        BaseElem Chat = BaseElem(50, 50, 100, 100, "ChatIcon.png");
+        BaseElem Shop = BaseElem(50, 50, 100, 100, "ShopIcon.png");
+        BaseElem Chat = BaseElem(50, 200, 100, 100, "ChatIcon.png");
 
 //============================================================================================================
 
@@ -68,27 +68,27 @@ int main() {
                     {
                         if (CurrentView == ViewType::Map)
                         {
-                            if (Shop.mSprite.getLocalBounds().contains(MousePos.x, MousePos.y)) {
+                            if (Shop.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
                                 CurrentView = ViewType::Shop;
                             }
-                            else if (Pause.mSprite.getLocalBounds().contains(MousePos.x, MousePos.y)) {
+                            else if (Pause.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
                                 return 0;
                             }
-                            else if (Chat.mSprite.getLocalBounds().contains(MousePos.x, MousePos.y)) {
+                            else if (Chat.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
                                 CurrentView = ViewType::Chat;
                             }
                         }
 
                         else if (CurrentView == ViewType::Shop)
                         {
-                            if (Close.mSprite.getLocalBounds().contains(MousePos.x, MousePos.y)) {
+                            if (Close.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
                                 CurrentView = ViewType::Map;
                             }
                         }
 
                         else // if (CurrentView == ViewType::Chat)
                         {
-                            if (Close.mSprite.getLocalBounds().contains(MousePos.x, MousePos.y)) {
+                            if (Close.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
                                 CurrentView = ViewType::Map;
                             }
                         }
@@ -125,32 +125,24 @@ int main() {
                 for(int i = 0; i < 20; ++i) {
                     for(int j = 0; j < 20; ++j) {
                         MapBackground.mSprite.setTextureRect(sf::IntRect(0, 0, 346, 333));
-
                         MapBackground.mSprite.setPosition(j * 346, i * 333);
                         window.draw(MapBackground.mSprite);
                     }
                 }
                 window.draw(Cat.mSprite);
-                Shop.mSprite.setPosition(View.getCenter().x - 910, View.getCenter().y - 490);
                 window.draw(Shop.mSprite);
-                Chat.mSprite.setPosition(View.getCenter().x - 910, View.getCenter().y - 340);
                 window.draw(Chat.mSprite);
-                Pause.mSprite.setPosition(View.getCenter().x + 810, View.getCenter().y - 490);
                 window.draw(Pause.mSprite);
 
             }
             else if (CurrentView == ViewType::Shop) {
-                ShopBackground.mSprite.setPosition(View.getCenter().x - 960, View.getCenter().y - 540);
                 window.draw(ShopBackground.mSprite);
-                Close.mSprite.setPosition(View.getCenter().x + 810, View.getCenter().y - 490);
                 window.draw(Close.mSprite);
             }
             else { // if (CurrentView == ViewType::Chat)
-                Close.mSprite.setPosition(View.getCenter().x + 810, View.getCenter().y - 490);
                 window.draw(Close.mSprite);
             }
-
-
+            
 //============================================= Display ==============================================================
 
             window.display();
