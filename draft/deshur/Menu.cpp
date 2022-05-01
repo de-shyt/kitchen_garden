@@ -2,9 +2,9 @@
 #include "Player.h"
 
 void menu(sf::RenderWindow & window) {
-    BaseElem NewGame = BaseElem(100, 30, 169, 39, "NewGameIcon.png");
-    BaseElem Exit = BaseElem(100, 90, 110, 41, "ExitIcon.png");
-    BaseElem Carrot = BaseElem(300, -20, 918, 950, "CarrotIcon.png");
+    BaseElem NewGame = BaseElem(100, 30, 169, 39, "newgame.png");
+    BaseElem Exit = BaseElem(100, 90, 110, 41, "exit.png");
+    BaseElem Carrot = BaseElem(300, -20, 918, 950, "carrot.png");
     Carrot.mSprite.setRotation(15);
 
     bool isMenu = true;
