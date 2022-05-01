@@ -15,7 +15,6 @@ int main() {
 
     menu(window);
 
-
     try
     {
 //============================================== Creating Elems ==============================================
@@ -125,15 +124,12 @@ int main() {
             if (CurrentView == ViewType::Map) {
                 for(int i = 0; i < 20; ++i) {
                     for(int j = 0; j < 20; ++j) {
-                        /*if(TileMap[i][j] == '0')*/ {
-                            MapBackground.mSprite.setTextureRect(sf::IntRect(0, 0, 346, 333));
-                        }
+                        MapBackground.mSprite.setTextureRect(sf::IntRect(0, 0, 346, 333));
 
                         MapBackground.mSprite.setPosition(j * 346, i * 333);
                         window.draw(MapBackground.mSprite);
                     }
                 }
-//                window.draw(MapBackground.mSprite);
                 window.draw(Cat.mSprite);
                 Shop.mSprite.setPosition(View.getCenter().x - 910, View.getCenter().y - 490);
                 window.draw(Shop.mSprite);
