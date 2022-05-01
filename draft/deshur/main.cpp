@@ -18,7 +18,7 @@ int main() {
 
         BaseElem MapBackground = BaseElem(0, 0, 2048, 2048, "GrassBG.png");
         BaseElem ShopBackground = BaseElem(0, 0, 2048, 2048, "ShopBG.png");
-        Player Cat = Player(860, 440, 200, 200, 4, 8, "PlayerIcon.png");
+        Player Cat = Player(860, 440, 50, 92, 4, 8, "PlayerIcon.png");
         BaseElem Pause = BaseElem(1770, 50, 100, 100, "PauseIcon.png");
         BaseElem Close = BaseElem(1770, 50, 100, 100, "CloseIcon.png");
         BaseElem Shop = BaseElem(50, 200, 100, 100, "ShopIcon.png");
