@@ -7,7 +7,7 @@
 int main() {
 
     enum class ViewType{ Map, Shop, Chat, Menu };
-    
+
     auto CurrentView = ViewType::Menu;
 
     View.reset(sf::FloatRect(0, 0, 1920, 1080));
@@ -15,21 +15,21 @@ int main() {
 
     try
     {
-        
+
 //============================================== Creating Elems ==============================================
 
-        BaseElem NewGame = BaseElem(100, 30, 169, 39, "NewGameIcon.png");
-        BaseElem Exit = BaseElem(100, 90, 110, 41, "ExitIcon.png");
-        BaseElem Carrot = BaseElem(300, -20, 918, 950, "CarrotIcon.png");
+        BaseElem NewGame = BaseElem(100, 30, 169, 39, "newgame.png");
+        BaseElem Exit = BaseElem(100, 90, 110, 41, "exit.png");
+        BaseElem Carrot = BaseElem(300, -20, 918, 950, "carrot.png");
         Carrot.mSprite.setRotation(15);
 
-        BaseElem MapBackground = BaseElem(0, 0, 2048, 2048, "GrassBG.png");
-        BaseElem ShopBackground = BaseElem(0, 0, 2048, 2048, "ShopBG.png");
-        Player Cat = Player(860, 440, 50, 92, 4, 8, "PlayerIcon.png");
-        BaseElem Pause = BaseElem(1770, 50, 100, 100, "PauseIcon.png");
-        BaseElem Close = BaseElem(1770, 50, 100, 100, "CloseIcon.png");
-        BaseElem Shop = BaseElem(50, 50, 100, 100, "ShopIcon.png");
-        BaseElem Chat = BaseElem(50, 200, 100, 100, "ChatIcon.png");
+        BaseElem MapBackground = BaseElem(0, 0, 2048, 2048, "grassBG.png");
+        BaseElem ShopBackground = BaseElem(0, 0, 2048, 2048, "shopBG.png");
+        Player Cat = Player(860, 440, 50, 92, 4, 8, "player.png");
+        BaseElem Pause = BaseElem(1770, 50, 100, 100, "pause.png");
+        BaseElem Close = BaseElem(1770, 50, 100, 100, "close.png");
+        BaseElem Shop = BaseElem(50, 50, 100, 100, "shop.png");
+        BaseElem Chat = BaseElem(50, 200, 100, 100, "chat.png");
 
 //============================================================================================================
 
@@ -62,7 +62,15 @@ int main() {
                         }
                     }
                     else if (event.key.code == sf::Keyboard::Escape) {
-                        CurrentView = ViewType::Map;
+                        if (CurrentView == ViewType::Chat || CurrentView == ViewType::Shop) {
+                            CurrentView = ViewType::Map;
+                        }
+                        else if (CurrentView == ViewType::Map) {
+                            CurrentView = ViewType::Menu;
+                        }
+                        else if (CurrentView == ViewType::Menu) {
+                            window.close();
+                        }
                     }
                 }
 
@@ -79,7 +87,7 @@ int main() {
                                 CurrentView = ViewType::Menu;
                             }
                             else if (Chat.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                                CurrentView = ViewType::Menu;
+                                CurrentView = ViewType::Chat;
                             }
                         }
 
@@ -103,7 +111,7 @@ int main() {
                                 CurrentView = ViewType::Map;
                             }
                             else if (Exit.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                                return 0;
+                                window.close();
                             }
                         }
                     }
@@ -124,6 +132,8 @@ int main() {
             }
 
             if (CurrentView == ViewType::Menu) {
+                NewGame.mSprite.setColor(sf::Color::White);
+                Exit.mSprite.setColor(sf::Color::White);
                 if (sf::IntRect(100, 30, 170, 60).contains(sf::Mouse::getPosition(window))) {
                     NewGame.mSprite.setColor(sf::Color::Blue);
                 }
@@ -131,6 +141,7 @@ int main() {
                     Exit.mSprite.setColor(sf::Color::Blue);
                 }
             }
+
 
 
 //============================================== Draw ========================================================
@@ -164,11 +175,12 @@ int main() {
             else if (CurrentView == ViewType::Chat) {
                 window.draw(Close.mSprite);
             }
-            else { // if (CurrentView == ViewType::Menu)
+            else if (CurrentView == ViewType::Menu) {
                 window.draw(Carrot.mSprite);
                 window.draw(NewGame.mSprite);
                 window.draw(Exit.mSprite);
             }
+
 
 
 //============================================= Display ==============================================================
