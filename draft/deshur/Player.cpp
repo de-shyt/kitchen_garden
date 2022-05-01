@@ -31,11 +31,12 @@ BaseElem::BaseElem(float x_, float y_, float w_, float h_, std::string &&name)
 
 Player::Player() = default;
 
-Player::Player(float x_, float y_, float w_, float h_, std::string &&name)
+Player::Player(float x_, float y_, float w_, float h_,
+               float recTop, float recLeft, std::string &&name)
     : BaseElem(x_, y_, w_, h_, std::move(name)) {
 //    mImage.createMaskFromColor(sf::Color(0,0,0));
 //    mImage.createMaskFromColor(sf::Color(255,255,255));
-//    mSprite.setTextureRect(sf::IntRect((int) x, (int) y, (int) w, (int) h));
+    mSprite.setTextureRect(sf::IntRect(recLeft, recTop, w, h));
 }
 
 void Player::update(float time) {
@@ -58,6 +59,36 @@ void Player::update(float time) {
 
     speed = 0;
     mSprite.setPosition(x, y);
+}
+
+void Player::GoLeft(float &CurrentFrame, float &time) {
+    dir = Direction::Left;
+    speed = 0.1;
+    CurrentFrame += 0.005 * time;
+    if (CurrentFrame > 4) CurrentFrame -= 4;
+    mSprite.setTextureRect(sf::IntRect(64 * int(CurrentFrame), 96, 64, 96));
+}
+
+void Player::GoRight(float &CurrentFrame, float &time) {
+    dir = Direction::Right;
+    speed = 0.1;
+    CurrentFrame += 0.005 * time;
+    if (CurrentFrame > 4) CurrentFrame -= 4;
+    mSprite.setTextureRect(sf::IntRect(64 * int(CurrentFrame), 192, 64, 96));
+}
+
+void Player::GoUp(float &CurrentFrame, float &time) {
+    dir = Direction::Up;
+    speed = 0.1;
+    CurrentFrame += 0.005 * time;
+    if (CurrentFrame > 4) CurrentFrame -= 4;
+    mSprite.setTextureRect(sf::IntRect(64 * int(CurrentFrame), 288, 64, 96));
+}
+void Player::GoDown(float &CurrentFrame, float &time) {
+    dir = Direction::Down; speed = 0.1;
+    CurrentFrame += 0.005 * time;
+    if (CurrentFrame > 4) CurrentFrame -= 4;
+    mSprite.setTextureRect(sf::IntRect(64 * int(CurrentFrame), 0, 64, 96));
 }
 
 
