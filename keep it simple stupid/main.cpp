@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Player.h"
-#include "View.h"
+
 
 
 int main() {
@@ -10,13 +10,14 @@ int main() {
 
     auto CurrentView = ViewType::Menu;
 
-    View.reset(sf::FloatRect(0, 0, 1920, 1080));
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "POTATO SIMULATOR");
+
+
 
     try
     {
-
 //============================================== Creating Elems ==============================================
+
 
         BaseElem NewGame = BaseElem(100, 30, 169, 39, "newgame.png");
         BaseElem Exit = BaseElem(100, 90, 110, 41, "exit.png");
@@ -30,6 +31,8 @@ int main() {
         BaseElem Close = BaseElem(1770, 50, 100, 100, "close.png");
         BaseElem Shop = BaseElem(50, 50, 100, 100, "shop.png");
         BaseElem Chat = BaseElem(50, 200, 100, 100, "chat.png");
+
+
 
 //============================================================================================================
 
@@ -129,6 +132,8 @@ int main() {
                     Cat.GoUp(CurrentFrame, time);
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                     Cat.GoDown(CurrentFrame, time);
+
+                Cat.update(time);
             }
 
             if (CurrentView == ViewType::Menu) {
@@ -149,11 +154,6 @@ int main() {
 
             window.clear(sf::Color(34, 177, 76));
 
-            ViewMap(time);
-            Cat.update(time);
-            ChangeView();
-
-            window.setView(View);
 
             if (CurrentView == ViewType::Map) {
                 for(int i = 0; i < 20; ++i) {
@@ -184,6 +184,7 @@ int main() {
 
 
 //============================================= Display ==============================================================
+
 
             window.display();
         }
