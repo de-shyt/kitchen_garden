@@ -14,7 +14,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "POTATO SIMULATOR");
 
     menu(window);
-    
+
     try
     {
 //============================================== Creating Elems ==============================================
@@ -124,8 +124,8 @@ int main() {
             if (CurrentView == ViewType::Map) {
                 for(int i = 0; i < 20; ++i) {
                     for(int j = 0; j < 20; ++j) {
-                        MapBackground.mSprite.setTextureRect(sf::IntRect(0, 0, 346, 333));
-                        MapBackground.mSprite.setPosition(j * 346, i * 333);
+                        MapBackground.mSprite.setTextureRect(sf::IntRect(0, 0, 333, 333));
+                        MapBackground.mSprite.setPosition(j * 333, i * 333);
                         window.draw(MapBackground.mSprite);
                     }
                 }
@@ -142,7 +142,7 @@ int main() {
             else { // if (CurrentView == ViewType::Chat)
                 window.draw(Close.mSprite);
             }
-            
+
 //============================================= Display ==============================================================
 
             window.display();
