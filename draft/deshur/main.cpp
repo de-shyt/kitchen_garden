@@ -9,7 +9,7 @@ int main() {
     auto CurrentView = ViewType::Map;
 
     View.reset(sf::FloatRect(0, 0, 1920, 1080));
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "FERMA");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "POTATO SIMULATOR");
 
 
     try
