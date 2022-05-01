@@ -18,7 +18,7 @@ int main() {
 
         BaseElem MapBackground = BaseElem(0, 0, 2048, 2048, "GrassBG.png");
         BaseElem ShopBackground = BaseElem(0, 0, 2048, 2048, "ShopBG.png");
-        Player Cat = Player(860, 440, 200, 200, "CatIcon.png");
+        Player Cat = Player(860, 440, 200, 200, 4, 8, "PlayerIcon.png");
         BaseElem Pause = BaseElem(1770, 50, 100, 100, "PauseIcon.png");
         BaseElem Close = BaseElem(1770, 50, 100, 100, "CloseIcon.png");
         BaseElem Shop = BaseElem(50, 200, 100, 100, "ShopIcon.png");
@@ -27,6 +27,7 @@ int main() {
 //============================================================================================================
 
         sf::Clock Clock;
+        float CurrentFrame = 0;
 
         while (window.isOpen())
         {
@@ -95,28 +96,14 @@ int main() {
 
             if (CurrentView == ViewType::Map)
             {
-                if (sf::Keyboard::isKeyPressed((sf::Keyboard::Left))) {
-                    Cat.dir = Direction::Left;
-                    Cat.speed = 0.5;
-                    Cat.mSprite.setTextureRect(sf::IntRect(0, 0, 183, 200));
-                    GetPlayerCoordinatesForView(Cat.x, Cat.y);
-                }
-                if (sf::Keyboard::isKeyPressed((sf::Keyboard::Right))) {
-                    Cat.dir = Direction::Right;
-                    Cat.speed = 0.5;
-                    Cat.mSprite.setTextureRect(sf::IntRect(200, 0, -200, 183));
-                    GetPlayerCoordinatesForView(Cat.x, Cat.y);
-                }
-                if (sf::Keyboard::isKeyPressed((sf::Keyboard::Up))) {
-                    Cat.dir = Direction::Up;
-                    Cat.speed = 0.5;
-                    GetPlayerCoordinatesForView(Cat.x, Cat.y);
-                }
-                if (sf::Keyboard::isKeyPressed((sf::Keyboard::Down))) {
-                    Cat.dir = Direction::Down;
-                    Cat.speed = 0.5;
-                    GetPlayerCoordinatesForView(Cat.x, Cat.y);
-                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                    Cat.GoLeft(CurrentFrame, time);
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                    Cat.GoRight(CurrentFrame, time);
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                    Cat.GoUp(CurrentFrame, time);
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                    Cat.GoDown(CurrentFrame, time);
             }
 
 
