@@ -3,13 +3,17 @@
 #include "Player.h"
 #include "View.h"
 
+void menu(sf::RenderWindow& window);
+
 int main() {
 
     enum class ViewType{ Map, Shop, Chat };
     auto CurrentView = ViewType::Map;
 
     View.reset(sf::FloatRect(0, 0, 1920, 1080));
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "POTATO SIMULATOR");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "FERMA");
+
+    menu(window);
 
 
     try
