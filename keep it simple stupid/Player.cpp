@@ -62,7 +62,7 @@ void Player::update(float time) {
 
 void Player::GoLeft(float &CurrentFrame, float &time) {
     dir = Direction::Left;
-    speed = 0.1;
+    speed = 0.25;
     CurrentFrame += 0.005 * time;
     if (CurrentFrame > 4) CurrentFrame -= 4;
     mSprite.setTextureRect(sf::IntRect(64 * int(CurrentFrame), 96, 64, 96));
@@ -70,7 +70,7 @@ void Player::GoLeft(float &CurrentFrame, float &time) {
 
 void Player::GoRight(float &CurrentFrame, float &time) {
     dir = Direction::Right;
-    speed = 0.1;
+    speed = 0.25;
     CurrentFrame += 0.005 * time;
     if (CurrentFrame > 4) CurrentFrame -= 4;
     mSprite.setTextureRect(sf::IntRect(64 * int(CurrentFrame), 192, 64, 96));
@@ -78,13 +78,13 @@ void Player::GoRight(float &CurrentFrame, float &time) {
 
 void Player::GoUp(float &CurrentFrame, float &time) {
     dir = Direction::Up;
-    speed = 0.1;
+    speed = 0.25;
     CurrentFrame += 0.005 * time;
     if (CurrentFrame > 4) CurrentFrame -= 4;
     mSprite.setTextureRect(sf::IntRect(64 * int(CurrentFrame), 288, 64, 96));
 }
 void Player::GoDown(float &CurrentFrame, float &time) {
-    dir = Direction::Down; speed = 0.1;
+    dir = Direction::Down; speed = 0.25;
     CurrentFrame += 0.005 * time;
     if (CurrentFrame > 4) CurrentFrame -= 4;
     mSprite.setTextureRect(sf::IntRect(64 * int(CurrentFrame), 0, 64, 96));
