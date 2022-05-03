@@ -50,8 +50,8 @@ struct BaseStruct {
 
 
 struct Menu : BaseStruct {
-    BaseElem NewGame = BaseElem(100, 30, 169, 39, "newgame.png");
-    BaseElem Exit = BaseElem(100, 90, 110, 41, "exit.png");
+    BaseElem NewGame = BaseElem(100, 30, 169, 39, "igraa.png");
+    BaseElem Exit = BaseElem(100, 90, 110, 41, "vihodd.png");
     BaseElem Carrot = BaseElem(300, -20, 918, 950, "carrot.png");
 //    Carrot.mSprite.setRotation(15);
 
