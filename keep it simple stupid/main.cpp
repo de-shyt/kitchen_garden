@@ -102,15 +102,7 @@ int main() {
 
             if (CurrentView == ViewType::Map)
             {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                    farmer.GoLeft(CurrentFrame, time);
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                    farmer.GoRight(CurrentFrame, time);
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                    farmer.GoUp(CurrentFrame, time);
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                    farmer.GoDown(CurrentFrame, time);
-
+                farmer.move(CurrentFrame, time);
                 farmer.update(time);
             }
 

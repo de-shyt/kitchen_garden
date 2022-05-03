@@ -96,3 +96,14 @@ void Player::GoDown(float &CurrentFrame, float &time) {
     if (CurrentFrame > 4) CurrentFrame -= 4;
     mSprite.setTextureRect(sf::IntRect(64 * int(CurrentFrame), 0, 64, 96));
 }
+
+void Player::move(float &CurrentFrame, float &time) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        GoLeft(CurrentFrame, time);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        GoRight(CurrentFrame, time);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        GoUp(CurrentFrame, time);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        GoDown(CurrentFrame, time);
+}

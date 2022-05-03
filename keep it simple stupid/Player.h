@@ -40,6 +40,7 @@ struct Player : BaseElem {
     void GoRight(float &CurrentFrame, float &time);
     void GoUp(float &CurrentFrame, float &time);
     void GoDown(float &CurrentFrame, float &time);
+    void move(float &CurrentFrame, float &time);
 };
 
 
