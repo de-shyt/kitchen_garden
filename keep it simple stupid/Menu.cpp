@@ -2,8 +2,8 @@
 
 
 Menu::Menu() :
-        NewGame(BaseElem(100, 30, 169, 39, "newgame.png")),
-        Exit(BaseElem(100, 90, 110, 41, "exit.png")),
+        NewGame(BaseElem(100, 30, 169, 39, "igraa.png")),
+        Exit(BaseElem(100, 90, 110, 41, "vihodd.png")),
         Carrot(BaseElem(300, -20, 918, 950, "carrot.png"))
 {
     Carrot.mSprite.setRotation(15);

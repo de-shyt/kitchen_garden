@@ -33,7 +33,7 @@ int main() {
         Map Map;
         Chat Chat;
 
-        Player Cat = Player(860, 440, 50, 92, 4, 8, "player.png");
+        Player farmer = Player(860, 440, 50, 92, 4, 8, "player.png");
 
 //============================================================================================================
 
@@ -103,15 +103,15 @@ int main() {
             if (CurrentView == ViewType::Map)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                    Cat.GoLeft(CurrentFrame, time);
+                    farmer.GoLeft(CurrentFrame, time);
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                    Cat.GoRight(CurrentFrame, time);
+                    farmer.GoRight(CurrentFrame, time);
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                    Cat.GoUp(CurrentFrame, time);
+                    farmer.GoUp(CurrentFrame, time);
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                    Cat.GoDown(CurrentFrame, time);
+                    farmer.GoDown(CurrentFrame, time);
 
-                Cat.update(time);
+                farmer.update(time);
             }
 
             if (CurrentView == ViewType::Menu) {
@@ -131,7 +131,7 @@ int main() {
 
             if (CurrentView == ViewType::Map) {
                 Map.Draw(window);
-                window.draw(Cat.mSprite);
+                window.draw(farmer.mSprite);
             }
             else if (CurrentView == ViewType::Shop) {
                 Shop.Draw(window);
