@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Chat::Chat() = default;
+Chat::Chat() : Close(BaseElem(1770, 50, 100, 100, "close.png")) {}
 
 Chat::~Chat() = default;
 

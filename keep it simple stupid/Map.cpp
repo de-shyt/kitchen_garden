@@ -1,5 +1,11 @@
 #include "Player.h"
 
+
+Map::Map() :
+        BG(BaseElem(0, 0, 2048, 2048, "grassBG.png")), Shop(BaseElem(50, 50, 100, 100, "shop.png")),
+        Chat(BaseElem(50, 200, 100, 100, "chat.png")), Pause(BaseElem(1770, 50, 100, 100, "pause.png")) {}
+
+
 std::string Map::CheckBoundaries(sf::Vector2i& MousePos) const {
     if (Shop.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
         return "Shop";

@@ -1,15 +1,29 @@
 #include "Player.h"
 
-Shop::Shop() = default;
+Shop::Shop() :
+        BG(BaseElem(0, 0, 2048, 2048, "shopBG.png")),
+        Close(BaseElem(1770, 50, 100, 100, "close.png")),
+        Frame(BaseElem(220, 220, 360, 360, "frame.png"))
+{
+    Items.push_back(new BaseElem(0, 0, 360, 360, "sun.png"));
+}
 
-Shop::~Shop() = default;
 
-void Shop::Draw(sf::RenderWindow &window) const {
-    window.draw(BG.mSprite);
+Shop::~Shop() {
     for (auto& item : Items) {
-        window.draw(item.mSprite);
+        delete item;
     }
+}
+
+void Shop::Draw(sf::RenderWindow &window) {
+    window.draw(BG.mSprite);
     window.draw(Close.mSprite);
+    for (std::size_t i = 0; i < Items.size(); ++i) {
+        Frame.mSprite.setPosition(180 + 400 * (i % 4), 180 + 400 * (i / 4));
+        window.draw(Frame.mSprite);
+        Items[i]->mSprite.setPosition(180 + 400 * (i % 4), 180 + 400 * (i / 4));
+        window.draw(Items[i]->mSprite);
+    }
 }
 
 std::string Shop::CheckBoundaries(sf::Vector2i& MousePos) const {
@@ -18,4 +32,3 @@ std::string Shop::CheckBoundaries(sf::Vector2i& MousePos) const {
     }
     return "Shop";
 }
-

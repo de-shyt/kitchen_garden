@@ -12,7 +12,7 @@ BaseElem::BaseElem() = default;
 
 
 BaseElem::BaseElem(float x_, float y_, float w_, float h_, std::string &&name)
-    : x(x_), y(y_), w(w_), h(h_), FileName(std::move(name))
+        : x(x_), y(y_), w(w_), h(h_), FileName(std::move(name))
 {
     std::ifstream f(FILE_LOCATION + FileName);
     if (!f.is_open()) {
@@ -33,7 +33,7 @@ Player::Player() = default;
 
 Player::Player(float x_, float y_, float w_, float h_,
                float recTop, float recLeft, std::string &&name)
-    : BaseElem(x_, y_, w_, h_, std::move(name))
+        : BaseElem(x_, y_, w_, h_, std::move(name))
 {
     mSprite.setTextureRect(sf::IntRect(recLeft, recTop, w, h));
 }

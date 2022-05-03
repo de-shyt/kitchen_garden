@@ -33,7 +33,7 @@ int main() {
         Map Map;
         Chat Chat;
 
-        Player farmer = Player(860, 440, 50, 92, 4, 8, "player.png");
+        Player Cat = Player(860, 440, 50, 92, 4, 8, "player.png");
 
 //============================================================================================================
 
@@ -103,21 +103,20 @@ int main() {
             if (CurrentView == ViewType::Map)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                    farmer.GoLeft(CurrentFrame, time);
+                    Cat.GoLeft(CurrentFrame, time);
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                    farmer.GoRight(CurrentFrame, time);
+                    Cat.GoRight(CurrentFrame, time);
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                    farmer.GoUp(CurrentFrame, time);
+                    Cat.GoUp(CurrentFrame, time);
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                    farmer.GoDown(CurrentFrame, time);
+                    Cat.GoDown(CurrentFrame, time);
 
-                farmer.update(time);
+                Cat.update(time);
             }
 
             if (CurrentView == ViewType::Menu) {
                 Menu.ChangeColor(window);
             }
-
 
 
 //============================================== Draw ========================================================
@@ -128,7 +127,7 @@ int main() {
 
             if (CurrentView == ViewType::Map) {
                 Map.Draw(window);
-                window.draw(farmer.mSprite);
+                window.draw(Cat.mSprite);
             }
             else if (CurrentView == ViewType::Shop) {
                 Shop.Draw(window);
@@ -139,7 +138,7 @@ int main() {
             else if (CurrentView == ViewType::Menu) {
                 Menu.Draw(window);
             }
-            else if (CurrentView == ViewType::CloseWindow) {
+            else {     // if (CurrentView == ViewType::CloseWindow)
                 window.close();
             }
 

@@ -50,11 +50,11 @@ struct BaseStruct {
 
 
 struct Menu : BaseStruct {
-    BaseElem NewGame = BaseElem(100, 30, 169, 39, "igraa.png");
-    BaseElem Exit = BaseElem(100, 90, 110, 41, "vihodd.png");
-    BaseElem Carrot = BaseElem(300, -20, 918, 950, "carrot.png");
-//    Carrot.mSprite.setRotation(15);
+    BaseElem NewGame;
+    BaseElem Exit;
+    BaseElem Carrot;
 
+    Menu();
     void Draw(sf::RenderWindow& window) const;
     void ChangeColor(sf::RenderWindow& window);
     std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
@@ -62,30 +62,32 @@ struct Menu : BaseStruct {
 
 
 struct Map : BaseStruct {
-    BaseElem BG = BaseElem(0, 0, 2048, 2048, "grassBG.png");
-    BaseElem Shop = BaseElem(50, 50, 100, 100, "shop.png");
-    BaseElem Chat = BaseElem(50, 200, 100, 100, "chat.png");
-    BaseElem Pause = BaseElem(1770, 50, 100, 100, "pause.png");
+    BaseElem BG;
+    BaseElem Shop;
+    BaseElem Chat;
+    BaseElem Pause;
 
+    Map();
     std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
     void Draw(sf::RenderWindow& window);
 };
 
 
 struct Shop : BaseStruct {
-    BaseElem BG = BaseElem(0, 0, 2048, 2048, "shopBG.png");
-    BaseElem Close = BaseElem(1770, 50, 100, 100, "close.png");
-    std::vector<BaseElem> Items;
+    BaseElem BG;
+    BaseElem Close;
+    BaseElem Frame;
+    std::vector<BaseElem*> Items;
 
     Shop();
     ~Shop();
-    void Draw(sf::RenderWindow& window) const;
+    void Draw(sf::RenderWindow& window);
     std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
 };
 
 
 struct Chat : BaseStruct {
-    BaseElem Close = BaseElem(1770, 50, 100, 100, "close.png");
+    BaseElem Close;
 
     Chat();
     ~Chat();
