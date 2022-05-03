@@ -57,7 +57,7 @@ struct Menu : BaseStruct {
 
     void Draw(sf::RenderWindow& window) const;
     void ChangeColor(sf::RenderWindow& window);
-    std::string CheckBoundaries(sf::Vector2i& MousePos) const;
+    std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
 };
 
 
@@ -67,7 +67,7 @@ struct Map : BaseStruct {
     BaseElem Chat = BaseElem(50, 200, 100, 100, "chat.png");
     BaseElem Pause = BaseElem(1770, 50, 100, 100, "pause.png");
 
-    std::string CheckBoundaries(sf::Vector2i& MousePos) const;
+    std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
     void Draw(sf::RenderWindow& window);
 };
 
@@ -80,7 +80,7 @@ struct Shop : BaseStruct {
     Shop();
     ~Shop();
     void Draw(sf::RenderWindow& window) const;
-    std::string CheckBoundaries(sf::Vector2i& MousePos) const;
+    std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
 };
 
 
@@ -90,7 +90,7 @@ struct Chat : BaseStruct {
     Chat();
     ~Chat();
     void Draw(sf::RenderWindow& window) const;
-    std::string CheckBoundaries(sf::Vector2i& MousePos) const;
+    std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
 };
 
 #endif //DRAFT_PLAYER_H
