@@ -2,37 +2,41 @@
 #include <iostream>
 #include "Player.h"
 
+enum class ViewType{ Map, Shop, Chat, Menu, CloseWindow };
+
+ViewType ReturnViewType(std::string&& s) {
+    if (s == "Map") return ViewType::Map;
+    if (s == "Shop") return ViewType::Shop;
+    if (s == "Chat") return ViewType::Chat;
+    if (s == "Menu") return ViewType::Menu;
+    if (s == "CloseWindow") return ViewType::CloseWindow;
+
+    std::cout << "Error while getting ViewType from string\n";
+    return ViewType::Map;
+}
+
+ViewType CheckCurrentView(BaseStruct& Struct, sf::Vector2i& MousePos) {
+    return ReturnViewType(Struct.CheckBoundaries(MousePos));
+}
 
 
 int main() {
-
-    enum class ViewType{ Map, Shop, Chat, Menu };
 
     auto CurrentView = ViewType::Menu;
 
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "POTATO SIMULATOR");
 
 
-
     try
     {
 //============================================== Creating Elems ==============================================
 
+        Shop Shop;
+        Menu Menu;
+        Map Map;
+        Chat Chat;
 
-        BaseElem NewGame = BaseElem(100, 30, 169, 39, "newgame.png");
-        BaseElem Exit = BaseElem(100, 90, 110, 41, "exit.png");
-        BaseElem Carrot = BaseElem(300, -20, 918, 950, "carrot.png");
-        Carrot.mSprite.setRotation(15);
-
-        BaseElem MapBackground = BaseElem(0, 0, 2048, 2048, "grassBG.png");
-        BaseElem ShopBackground = BaseElem(0, 0, 2048, 2048, "shopBG.png");
         Player Cat = Player(860, 440, 50, 92, 4, 8, "player.png");
-        BaseElem Pause = BaseElem(1770, 50, 100, 100, "pause.png");
-        BaseElem Close = BaseElem(1770, 50, 100, 100, "close.png");
-        BaseElem Shop = BaseElem(50, 50, 100, 100, "shop.png");
-        BaseElem Chat = BaseElem(50, 200, 100, 100, "chat.png");
-
-
 
 //============================================================================================================
 
@@ -81,41 +85,18 @@ int main() {
                 {
                     if (event.mouseButton.button == sf::Mouse::Left)
                     {
-                        if (CurrentView == ViewType::Map)
-                        {
-                            if (Shop.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                                CurrentView = ViewType::Shop;
-                            }
-                            else if (Pause.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                                CurrentView = ViewType::Menu;
-                            }
-                            else if (Chat.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                                CurrentView = ViewType::Chat;
-                            }
+                        if (CurrentView == ViewType::Map) {
+                            CurrentView = CheckCurrentView(Map, MousePos);
                         }
+                        else if (CurrentView == ViewType::Shop) {
+                            CurrentView = CheckCurrentView(Shop, MousePos);
 
-                        else if (CurrentView == ViewType::Shop)
-                        {
-                            if (Close.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                                CurrentView = ViewType::Map;
-                            }
                         }
-
-                        else if (CurrentView == ViewType::Chat)
-                        {
-                            if (Close.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                                CurrentView = ViewType::Map;
-                            }
+                        else if (CurrentView == ViewType::Chat) {
+                            CurrentView = CheckCurrentView(Chat, MousePos);
                         }
-
-                        else // if (CurrentView == ViewType::Menu)
-                        {
-                            if (NewGame.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                                CurrentView = ViewType::Map;
-                            }
-                            else if (Exit.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                                window.close();
-                            }
+                        else if (CurrentView == ViewType::Menu) {
+                            CurrentView = CheckCurrentView(Menu, MousePos);
                         }
                     }
                 }
@@ -137,14 +118,7 @@ int main() {
             }
 
             if (CurrentView == ViewType::Menu) {
-                NewGame.mSprite.setColor(sf::Color::White);
-                Exit.mSprite.setColor(sf::Color::White);
-                if (sf::IntRect(100, 30, 170, 60).contains(sf::Mouse::getPosition(window))) {
-                    NewGame.mSprite.setColor(sf::Color::Blue);
-                }
-                if (sf::IntRect(100, 90, 170, 50).contains(sf::Mouse::getPosition(window))) {
-                    Exit.mSprite.setColor(sf::Color::Blue);
-                }
+                Menu.ChangeColor(window);
             }
 
 
@@ -156,29 +130,20 @@ int main() {
 
 
             if (CurrentView == ViewType::Map) {
-                for(int i = 0; i < 20; ++i) {
-                    for(int j = 0; j < 20; ++j) {
-                        MapBackground.mSprite.setTextureRect(sf::IntRect(0, 0, 346, 333));
-                        MapBackground.mSprite.setPosition(j * 346, i * 333);
-                        window.draw(MapBackground.mSprite);
-                    }
-                }
+                Map.Draw(window);
                 window.draw(Cat.mSprite);
-                window.draw(Shop.mSprite);
-                window.draw(Chat.mSprite);
-                window.draw(Pause.mSprite);
             }
             else if (CurrentView == ViewType::Shop) {
-                window.draw(ShopBackground.mSprite);
-                window.draw(Close.mSprite);
+                Shop.Draw(window);
             }
             else if (CurrentView == ViewType::Chat) {
-                window.draw(Close.mSprite);
+                Chat.Draw(window);
             }
             else if (CurrentView == ViewType::Menu) {
-                window.draw(Carrot.mSprite);
-                window.draw(NewGame.mSprite);
-                window.draw(Exit.mSprite);
+                Menu.Draw(window);
+            }
+            else if (CurrentView == ViewType::CloseWindow) {
+                window.close();
             }
 
 
