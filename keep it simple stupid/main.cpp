@@ -118,6 +118,10 @@ int main() {
                 Menu.ChangeColor(window);
             }
 
+            if (CurrentView == ViewType::Shop) {
+                Shop.ChangeColor(window, MousePos);
+            }
+
 
 //============================================== Draw ========================================================
 
