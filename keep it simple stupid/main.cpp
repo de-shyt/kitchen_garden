@@ -4,19 +4,16 @@
 
 enum class ViewType{ Map, Shop, Chat, Menu, CloseWindow };
 
-ViewType ReturnViewType(std::string&& s) {
-    if (s == "Map") return ViewType::Map;
-    if (s == "Shop") return ViewType::Shop;
-    if (s == "Chat") return ViewType::Chat;
-    if (s == "Menu") return ViewType::Menu;
-    if (s == "CloseWindow") return ViewType::CloseWindow;
+ViewType CheckCurrentView(BaseStruct& Struct, sf::Vector2i& MousePos) {
+    std::string Type = Struct.CheckBoundaries(MousePos);
+    if (Type == "Map") return ViewType::Map;
+    if (Type == "Shop") return ViewType::Shop;
+    if (Type == "Chat") return ViewType::Chat;
+    if (Type == "Menu") return ViewType::Menu;
+    if (Type == "CloseWindow") return ViewType::CloseWindow;
 
     std::cout << "Error while getting ViewType from string\n";
     return ViewType::Map;
-}
-
-ViewType CheckCurrentView(BaseStruct& Struct, sf::Vector2i& MousePos) {
-    return ReturnViewType(Struct.CheckBoundaries(MousePos));
 }
 
 
