@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 
 enum class Direction {Left, Right, Up, Down};
 
@@ -95,6 +96,28 @@ struct Chat : BaseStruct {
     ~Chat();
     void Draw(sf::RenderWindow& window) const;
     std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
+};
+
+struct Money : BaseElem {
+    sf::Font font;
+    sf::Text text;
+    int balance = 100; // храним в бд
+
+    Money() {
+        font.loadFromFile("CyrilicOld.ttf");
+        sf::Text txt("", font, 50);
+        text = txt;
+        text.setColor(sf::Color::Black);
+        text.setStyle(sf::Text::Bold);
+    }
+
+    void Draw(sf::RenderWindow& window) {
+        std::ostringstream money_string;
+        money_string << balance;
+        text.setString("Balance: " + money_string.str());
+        text.setPosition(1450, 50);
+        window.draw(text);
+    }
 };
 
 #endif //DRAFT_PLAYER_H

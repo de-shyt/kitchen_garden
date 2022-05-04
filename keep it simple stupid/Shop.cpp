@@ -5,7 +5,7 @@ Shop::Shop() :
         Close(BaseElem(1770, 50, 100, 100, "close.png")),
         Frame(BaseElem(220, 220, 360, 360, "frame.png"))
 {
-    Items.push_back(new BaseElem(0, 0, 280, 280, "gryadkaIcon.png"));
+    Items.push_back(new BaseElem(0, 0, 360, 360, "gryadkaIcon.png"));
     Items.push_back(new BaseElem(0, 0, 360, 360, "donut.png"));
     Items.push_back(new BaseElem(0, 0, 360, 360, "diploma.png"));
 }
