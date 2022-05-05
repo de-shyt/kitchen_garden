@@ -105,16 +105,14 @@ struct Money : BaseElem {
 
     Money() {
         font.loadFromFile("CyrilicOld.ttf");
-        sf::Text txt("", font, 50);
-        text = txt;
-        text.setColor(sf::Color::Black);
+        text = sf::Text("", font, 50);
+        text.setFillColor(sf::Color::Black);
+        text.setOutlineColor(sf::Color::Black);
         text.setStyle(sf::Text::Bold);
     }
 
     void Draw(sf::RenderWindow& window) {
-        std::ostringstream money_string;
-        money_string << balance;
-        text.setString("Balance: " + money_string.str());
+        text.setString("Balance: " + std::to_string(balance));
         text.setPosition(1450, 50);
         window.draw(text);
     }
