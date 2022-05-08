@@ -69,7 +69,7 @@ struct Map : BaseStruct {
     BaseElem Shop;
     BaseElem Chat;
     BaseElem Pause;
-    std::vector<BaseElem*> BoughtItems;
+    std::map<std::string, BaseElem*> BoughtItems;
 
     Map();
     std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
