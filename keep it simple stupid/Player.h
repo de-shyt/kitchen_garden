@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <map>
 #include <sstream>
 
 enum class Direction {Left, Right, Up, Down};
@@ -68,6 +69,7 @@ struct Map : BaseStruct {
     BaseElem Shop;
     BaseElem Chat;
     BaseElem Pause;
+    std::vector<BaseElem*> BoughtItems;
 
     Map();
     std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
@@ -79,9 +81,11 @@ struct Shop : BaseStruct {
     BaseElem BG;
     BaseElem Close;
     BaseElem Frame;
-    std::vector<BaseElem*> Items;
+    std::map<std::string, BaseElem*> Items;
+    Map* MapPtr;
 
     Shop();
+    explicit Shop(Map* map_ptr);
     ~Shop();
     void Draw(sf::RenderWindow& window);
     std::string CheckBoundaries(sf::Vector2i& MousePos) const override;

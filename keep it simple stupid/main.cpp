@@ -28,9 +28,9 @@ int main() {
     {
 //============================================== Creating Elems ==============================================
 
-        Shop Shop;
         Menu Menu;
         Map Map;
+        Shop Shop(&Map);
         Chat Chat;
         Money money;
 
