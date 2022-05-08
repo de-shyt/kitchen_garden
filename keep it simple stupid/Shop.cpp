@@ -11,6 +11,13 @@ Shop::Shop(Map* map_ptr) :
         Items["rabatka"] = new BaseElem(0, 0, 360, 360, "rabatka.png");
         Items["donut"] = new BaseElem(0, 0, 360, 360, "donut.png");
         Items["diploma"] = new BaseElem(0, 0, 360, 360, "diploma.png");
+
+        int coord = 0;
+        for (auto it = Items.begin(); it != Items.end(); it++, coord++) {
+            it->second->x = 180 + 400 * (coord % 4);
+            it->second->y = 180 + 400 * (coord / 4);
+            it->second->mSprite.setPosition(it->second->x, it->second->y);
+        }
     }
 
 
@@ -24,11 +31,9 @@ Shop::~Shop() {
 void Shop::Draw(sf::RenderWindow &window) {
     window.draw(BG.mSprite);
     window.draw(Close.mSprite);
-    int coord = 0;
-    for (auto it = Items.begin(); it != Items.end(); it++, coord++) {
+    for (const auto& it : Items) {
         window.draw(Frame.mSprite);
-        it->second->mSprite.setPosition(180 + 400 * (coord % 4), 180 + 400 * (coord / 4));
-        window.draw(it->second->mSprite);
+        window.draw(it.second->mSprite);
     }
 }
 
@@ -36,9 +41,9 @@ std::string Shop::CheckBoundaries(sf::Vector2i& MousePos) const {
     if (Close.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
         return "Map";
     }
-    for (auto it = Items.begin(); it != Items.end(); it++) {
-        if (it->second->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-
+    for (const auto& it : Items) {
+        if (it.second->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
+            // TODO
             return "Map";
         }
     }
@@ -49,10 +54,9 @@ std::string Shop::CheckBoundaries(sf::Vector2i& MousePos) const {
 void Shop::ChangeColor(sf::RenderWindow& window, sf::Vector2i& MousePos) {
     Frame.mSprite.setColor(sf::Color::Transparent);
     Frame.mSprite.setPosition(180, 180);
-    int coord = 0;
-    for (auto it = Items.begin(); it != Items.end(); it++, coord++) {
-        if (it->second->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-            Frame.mSprite.setPosition(180 + 400 * (coord % 4), 180 + 400 * (coord / 4));
+    for (const auto& it : Items) {
+        if (it.second->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
+            Frame.mSprite.setPosition(it.second->x, it.second->y);
             Frame.mSprite.setColor(sf::Color::Black);
         }
     }
