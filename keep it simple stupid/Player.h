@@ -72,6 +72,7 @@ struct Map : BaseStruct {
     std::map<std::string, BaseElem*> BoughtItems;
 
     Map();
+    ~Map();
     std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
     void Draw(sf::RenderWindow& window);
 };
@@ -90,6 +91,7 @@ struct Shop : BaseStruct {
     void Draw(sf::RenderWindow& window);
     std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
     void ChangeColor(sf::RenderWindow& window, sf::Vector2i& MousePos);
+    void BuyItem(BaseElem* item) const;
 };
 
 

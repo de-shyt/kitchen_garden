@@ -6,6 +6,14 @@ Map::Map() :
         Chat(BaseElem(50, 200, 100, 100, "chat.png")), Pause(BaseElem(1770, 50, 100, 100, "pause.png")) {}
 
 
+
+Map::~Map() {
+    for (auto& it : BoughtItems) {
+        delete it.second;
+    }
+}
+
+
 std::string Map::CheckBoundaries(sf::Vector2i& MousePos) const {
     if (Shop.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
         return "Shop";
@@ -27,6 +35,24 @@ void Map::Draw(sf::RenderWindow &window) {
             window.draw(BG.mSprite);
         }
     }
+
+    std::ifstream f("ShopDB.txt");
+
+    std::string ItemName, str;
+    float x, y;
+
+    while (std::getline(f, str))
+    {
+        std::stringstream stream(str);
+        stream >> ItemName >> x >> y;
+        auto it = BoughtItems.find(ItemName);
+        if (it == BoughtItems.end()) {
+            it = BoughtItems.insert(std::make_pair(ItemName, new BaseElem(0, 0, 35, 35, ItemName + "32x32.png"))).first;
+        }
+        it->second->mSprite.setPosition(x, y);
+        window.draw(it->second->mSprite);
+    }
+
     window.draw(Shop.mSprite);
     window.draw(Chat.mSprite);
     window.draw(Pause.mSprite);
