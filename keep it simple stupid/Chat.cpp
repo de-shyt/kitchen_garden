@@ -8,7 +8,7 @@ void Chat::Draw(sf::RenderWindow& window) const {
     window.draw(Close.mSprite);
 };
 
-std::string Chat::CheckBoundaries(sf::Vector2i& MousePos) const {
+std::string Chat::CheckBoundaries(sf::Vector2i& MousePos) {
     if (Close.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
         return "Map";
     }

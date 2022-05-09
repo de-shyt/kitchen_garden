@@ -26,7 +26,6 @@ struct BaseElem {
 
     BaseElem();
     explicit BaseElem(float x_, float y_, float w_, float h_, std::string&& name);
-//    BaseElem& operator=(BaseElem&& Elem) noexcept;
 };
 
 
@@ -71,6 +70,8 @@ struct Map : BaseStruct {
     BaseElem Pause;
     std::unordered_map<std::string, std::vector<BaseElem*>> BoughtItems;
     BaseElem* IsMove;
+    int dx;
+    int dy;
 
     Map();
     ~Map();
@@ -103,6 +104,7 @@ struct Chat : BaseStruct {
     void Draw(sf::RenderWindow& window) const;
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
 };
+
 
 struct Money : BaseElem {
     sf::Font font;

@@ -98,6 +98,20 @@ int main() {
                         }
                     }
                 }
+
+                else if (event.type == sf::Event::MouseButtonReleased)
+                {
+                    if (event.mouseButton.button == sf::Mouse::Left)
+                    {
+                        if (CurrentView == ViewType::Map)
+                        {
+                            if (Map.IsMove != nullptr) {
+                                Map.IsMove->mSprite.setColor(sf::Color::White);
+                                Map.IsMove = nullptr;
+                            }
+                        }
+                    }
+                }
             }
 
 

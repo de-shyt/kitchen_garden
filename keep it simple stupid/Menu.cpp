@@ -28,7 +28,7 @@ void Menu::ChangeColor(sf::RenderWindow &window) {
 }
 
 
-std::string Menu::CheckBoundaries(sf::Vector2i& MousePos) const {
+std::string Menu::CheckBoundaries(sf::Vector2i& MousePos) {
     if (NewGame.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
         return "Map";
     }
