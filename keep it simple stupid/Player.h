@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <sstream>
 
 enum class Direction {Left, Right, Up, Down};
@@ -48,7 +48,7 @@ struct Player : BaseElem {
 
 
 struct BaseStruct {
-    virtual std::string CheckBoundaries(sf::Vector2i& MousePos) const = 0;
+    virtual std::string CheckBoundaries(sf::Vector2i& MousePos) = 0;
 };
 
 
@@ -60,7 +60,7 @@ struct Menu : BaseStruct {
     Menu();
     void Draw(sf::RenderWindow& window) const;
     void ChangeColor(sf::RenderWindow& window);
-    std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
+    std::string CheckBoundaries(sf::Vector2i& MousePos) override;
 };
 
 
@@ -69,11 +69,12 @@ struct Map : BaseStruct {
     BaseElem Shop;
     BaseElem Chat;
     BaseElem Pause;
-    std::map<std::string, BaseElem*> BoughtItems;
+    std::unordered_map<std::string, std::vector<BaseElem*>> BoughtItems;
+    BaseElem* IsMove;
 
     Map();
     ~Map();
-    std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
+    std::string CheckBoundaries(sf::Vector2i& MousePos) override;
     void Draw(sf::RenderWindow& window);
 };
 
@@ -82,16 +83,15 @@ struct Shop : BaseStruct {
     BaseElem BG;
     BaseElem Close;
     BaseElem Frame;
-    std::map<std::string, BaseElem*> Items;
+    std::unordered_map<std::string, BaseElem*> Items;
     Map* MapPtr;
 
     Shop();
     explicit Shop(Map* map_ptr);
     ~Shop();
     void Draw(sf::RenderWindow& window);
-    std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
+    std::string CheckBoundaries(sf::Vector2i& MousePos) override;
     void ChangeColor(sf::RenderWindow& window, sf::Vector2i& MousePos);
-    void BuyItem(BaseElem* item) const;
 };
 
 
@@ -101,7 +101,7 @@ struct Chat : BaseStruct {
     Chat();
     ~Chat();
     void Draw(sf::RenderWindow& window) const;
-    std::string CheckBoundaries(sf::Vector2i& MousePos) const override;
+    std::string CheckBoundaries(sf::Vector2i& MousePos) override;
 };
 
 struct Money : BaseElem {
