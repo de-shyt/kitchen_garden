@@ -106,33 +106,7 @@ int main() {
                     {
                         if (CurrentView == ViewType::Map)
                         {
-                            if (Map.IsMove != nullptr) {
-                                bool Repeat = true;
-                                while (Repeat) {
-                                    Repeat = false;
-                                    bool CoordsChanged = false;
-                                    for (auto& it : Map.BoughtItems) {
-                                        if (CoordsChanged) {
-                                            break;
-                                        }
-                                        for (auto& elem : it.second) {
-                                            if (elem == Map.IsMove) {
-                                                continue;
-                                            }
-                                            if (elem->mSprite.getGlobalBounds().intersects(sf::Rect(Map.IsMove->x, Map.IsMove->y, Map.IsMove->w, Map.IsMove->h))) {
-                                                Map.IsMove->x = elem->x + 32;
-                                                Map.IsMove->y = elem->y;
-                                                Repeat = true;
-                                                CoordsChanged = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-
-                                Map.IsMove->mSprite.setColor(sf::Color::White);
-                                Map.IsMove = nullptr;
-                            }
+                            Map.CheckOverlap();
                         }
                     }
                 }

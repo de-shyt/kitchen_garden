@@ -42,6 +42,7 @@ struct Map : BaseStruct {
     ~Map();
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
     void Draw(sf::RenderWindow& window, BaseElem& player);
+    void CheckOverlap();
 };
 
 

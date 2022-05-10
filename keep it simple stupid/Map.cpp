@@ -42,6 +42,42 @@ std::string Map::CheckBoundaries(sf::Vector2i& MousePos)
 }
 
 
+void Map::CheckOverlap()
+{
+    if (IsMove == nullptr) {
+        return;
+    }
+
+    bool Repeat = true;
+    while (Repeat)
+    {
+        Repeat = false;
+        bool NeedBreak = false;
+        for (auto& it : BoughtItems) {
+            if (NeedBreak) {
+                break;
+            }
+            for (auto& elem : it.second)
+            {
+                if (elem == IsMove) {
+                    continue;
+                }
+                if (elem->mSprite.getGlobalBounds().intersects(sf::Rect(IsMove->x, IsMove->y, IsMove->w, IsMove->h))) {
+                    IsMove->x = elem->x + elem->w;
+                    IsMove->y = elem->y;
+                    Repeat = true;
+                    NeedBreak = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    IsMove->mSprite.setColor(sf::Color::White);
+    IsMove = nullptr;
+}
+
+
 void Map::Draw(sf::RenderWindow &window, BaseElem& player)
 {
     for(int i = 0; i < 20; ++i) {
