@@ -60,6 +60,11 @@ void Player::InteractionWithMap(Map* MapPtr) {
             }
         }
     }
+    if (x < 0) x = 0;
+    else if (x > 1920 - w) x = 1920 - w;
+
+    if (y < 0) y = 0;
+    else if (y > 1080 - h) y = 1080 - h;
 }
 
 
