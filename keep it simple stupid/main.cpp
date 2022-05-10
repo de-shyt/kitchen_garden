@@ -115,42 +115,40 @@ int main() {
             }
 
 
-            if (CurrentView == ViewType::Map)
-            {
-                farmer.move(CurrentFrame, time);
-                farmer.update(time);
-            }
-
-            if (CurrentView == ViewType::Menu) {
-                Menu.ChangeColor(window);
-            }
-
-            if (CurrentView == ViewType::Shop) {
-                Shop.ChangeColor(window, MousePos);
-            }
-
-
 //============================================== Draw ========================================================
 
 
             window.clear(sf::Color(34, 177, 76));
 
 
-            if (CurrentView == ViewType::Map) {
+            if (CurrentView == ViewType::Map)
+            {
+                farmer.move(CurrentFrame, time);
+                farmer.update(time);
                 Map.Draw(window);
                 window.draw(farmer.mSprite);
                 money.Draw(window);
             }
-            else if (CurrentView == ViewType::Shop) {
+
+            else if (CurrentView == ViewType::Shop)
+            {
+                Shop.ChangeColor(window, MousePos);
                 Shop.Draw(window);
             }
-            else if (CurrentView == ViewType::Chat) {
+
+            else if (CurrentView == ViewType::Chat)
+            {
                 Chat.Draw(window);
             }
-            else if (CurrentView == ViewType::Menu) {
+
+            else if (CurrentView == ViewType::Menu)
+            {
+                Menu.ChangeColor(window);
                 Menu.Draw(window);
             }
-            else {     // if (CurrentView == ViewType::CloseWindow)
+
+            else // if (CurrentView == ViewType::CloseWindow)
+            {
                 window.close();
             }
 
