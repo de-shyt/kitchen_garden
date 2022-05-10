@@ -32,7 +32,6 @@ int main() {
         Map Map;
         Shop Shop(&Map);
         Chat Chat;
-        Money money;
 
         Player farmer = Player(860, 440, 64, 96, 4, 8, "player.png");
 
@@ -148,9 +147,7 @@ int main() {
             {
                 farmer.move(CurrentFrame, time);
                 farmer.update(time, &Map);
-                Map.Draw(window);
-                window.draw(farmer.mSprite);
-                money.Draw(window);
+                Map.Draw(window, farmer);
             }
 
             else if (CurrentView == ViewType::Shop)

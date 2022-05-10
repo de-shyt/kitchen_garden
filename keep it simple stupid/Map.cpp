@@ -42,7 +42,7 @@ std::string Map::CheckBoundaries(sf::Vector2i& MousePos)
 }
 
 
-void Map::Draw(sf::RenderWindow &window)
+void Map::Draw(sf::RenderWindow &window, BaseElem& player)
 {
     for(int i = 0; i < 20; ++i) {
         for(int j = 0; j < 20; ++j) {
@@ -51,6 +51,8 @@ void Map::Draw(sf::RenderWindow &window)
             window.draw(BG.mSprite);
         }
     }
+
+    window.draw(player.mSprite);
 
     if (IsMove != nullptr) {
         IsMove->mSprite.setColor(sf::Color::Green);
@@ -68,4 +70,5 @@ void Map::Draw(sf::RenderWindow &window)
     window.draw(Shop.mSprite);
     window.draw(Chat.mSprite);
     window.draw(Pause.mSprite);
+    Money.Draw(window);
 }

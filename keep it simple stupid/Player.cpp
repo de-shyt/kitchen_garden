@@ -43,11 +43,6 @@ void Player::InteractionWithMap(Map* MapPtr) {
     for (auto& it : MapPtr->BoughtItems) {
         for (auto& elem : it.second) {
             if (elem->mSprite.getGlobalBounds().intersects(sf::Rect(sf::Rect(x, y, w, h)))) {
-                std::cout << "elem: " << elem->mSprite.getGlobalBounds().left << ' ' << elem->mSprite.getGlobalBounds().top << ' '
-                << elem->mSprite.getGlobalBounds().width << ' ' << elem->mSprite.getGlobalBounds().height << '\n';
-                std::cout << elem->x << ' ' << elem->y << ' ' << elem->w << ' ' << elem->h << "\n\n";
-                std::cout << "farmer: " << mSprite.getGlobalBounds().left << ' ' << mSprite.getGlobalBounds().top << ' '
-                << mSprite.getGlobalBounds().width << ' ' << mSprite.getGlobalBounds().height << '\n';
                 switch(dir) {
                     case Direction::Right: {
                         x = elem->x - w;
@@ -62,7 +57,6 @@ void Player::InteractionWithMap(Map* MapPtr) {
                         y = elem->y - h;
                     } break;
                 }
-                std::cout << "coords: " << x << ' ' << y << "\n\n";
             }
         }
     }

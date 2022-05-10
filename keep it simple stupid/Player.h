@@ -66,11 +66,33 @@ struct Menu : BaseStruct {
 };
 
 
+struct Money {
+    sf::Font font;
+    sf::Text text;
+    int balance = 100; // храним в бд
+
+    Money() {
+        font.loadFromFile("CyrilicOld.ttf");
+        text = sf::Text("", font, 50);
+        text.setFillColor(sf::Color::Black);
+        text.setOutlineColor(sf::Color::Black);
+        text.setStyle(sf::Text::Bold);
+    }
+
+    void Draw(sf::RenderWindow& window) {
+        text.setString("Balance: " + std::to_string(balance));
+        text.setPosition(1450, 50);
+        window.draw(text);
+    }
+};
+
+
 struct Map : BaseStruct {
     BaseElem BG;
     BaseElem Shop;
     BaseElem Chat;
     BaseElem Pause;
+    Money Money;
     std::unordered_map<std::string, std::vector<BaseElem*>> BoughtItems;
     BaseElem* IsMove;
     int dx;
@@ -79,7 +101,7 @@ struct Map : BaseStruct {
     Map();
     ~Map();
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
-    void Draw(sf::RenderWindow& window);
+    void Draw(sf::RenderWindow& window, BaseElem& player);
 };
 
 
@@ -108,25 +130,5 @@ struct Chat : BaseStruct {
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
 };
 
-
-struct Money : BaseElem {
-    sf::Font font;
-    sf::Text text;
-    int balance = 100; // храним в бд
-
-    Money() {
-        font.loadFromFile("CyrilicOld.ttf");
-        text = sf::Text("", font, 50);
-        text.setFillColor(sf::Color::Black);
-        text.setOutlineColor(sf::Color::Black);
-        text.setStyle(sf::Text::Bold);
-    }
-
-    void Draw(sf::RenderWindow& window) {
-        text.setString("Balance: " + std::to_string(balance));
-        text.setPosition(1450, 50);
-        window.draw(text);
-    }
-};
 
 #endif //DRAFT_PLAYER_H
