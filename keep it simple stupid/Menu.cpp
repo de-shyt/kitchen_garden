@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "BaseStruct.h"
 
 
 Menu::Menu() :

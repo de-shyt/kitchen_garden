@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "Player.h"
+#include "BaseElem.h"
+#include "BaseStruct.h"
+
 
 enum class ViewType{ Map, Shop, Chat, Menu, CloseWindow };
 

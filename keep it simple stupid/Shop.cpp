@@ -1,4 +1,5 @@
-#include "Player.h"
+#include "BaseStruct.h"
+
 
 Shop::Shop() : MapPtr(nullptr) {}
 

@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "BaseStruct.h"
 
 Chat::Chat() : Close(BaseElem(1770, 50, 100, 100, "close.png")) {}
 
