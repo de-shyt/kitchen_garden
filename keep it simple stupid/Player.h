@@ -48,6 +48,25 @@ struct Player : BaseElem {
 };
 
 
+struct TextElem {
+    sf::Font mFont;
+    sf::Text mText;
+    std::string FileName;
+
+    TextElem();
+    explicit TextElem(std::string&& filename, int CharSize, sf::Color Color, std::string&& TextLine);
+    ~TextElem();
+};
+
+
+struct Money : TextElem {
+    int balance = 100; // храним в бд
+
+    Money();
+    void Draw(sf::RenderWindow& window);
+    ~Money();
+};
+
 
 struct BaseStruct {
     virtual std::string CheckBoundaries(sf::Vector2i& MousePos) = 0;
@@ -55,35 +74,16 @@ struct BaseStruct {
 
 
 struct Menu : BaseStruct {
-    BaseElem NewGame;
-    BaseElem Exit;
+    TextElem NewGame;
+    TextElem Continue;
+    TextElem Settings;
+    TextElem Exit;
     BaseElem Carrot;
 
     Menu();
     void Draw(sf::RenderWindow& window) const;
     void ChangeColor(sf::RenderWindow& window);
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
-};
-
-
-struct Money {
-    sf::Font font;
-    sf::Text text;
-    int balance = 100; // храним в бд
-
-    Money() {
-        font.loadFromFile("CyrilicOld.ttf");
-        text = sf::Text("", font, 50);
-        text.setFillColor(sf::Color::Black);
-        text.setOutlineColor(sf::Color::Black);
-        text.setStyle(sf::Text::Bold);
-    }
-
-    void Draw(sf::RenderWindow& window) {
-        text.setString("Balance: " + std::to_string(balance));
-        text.setPosition(1450, 50);
-        window.draw(text);
-    }
 };
 
 
