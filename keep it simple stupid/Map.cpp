@@ -52,15 +52,17 @@ void Map::Draw(sf::RenderWindow &window)
         }
     }
 
-    for (auto& it : BoughtItems) {
-        for (auto& elem : it.second) {
-            window.draw(elem->mSprite);
-        }
-    }
-
     if (IsMove != nullptr) {
         IsMove->mSprite.setColor(sf::Color::Green);
-        IsMove->mSprite.setPosition(sf::Mouse::getPosition(window).x - dx, sf::Mouse::getPosition(window).y - dy);
+        IsMove->x = sf::Mouse::getPosition(window).x - dx;
+        IsMove->y = sf::Mouse::getPosition(window).y - dy;
+    }
+
+    for (auto& it : BoughtItems) {
+        for (auto& elem : it.second) {
+            elem->mSprite.setPosition(elem->x, elem->y);
+            window.draw(elem->mSprite);
+        }
     }
 
     window.draw(Shop.mSprite);

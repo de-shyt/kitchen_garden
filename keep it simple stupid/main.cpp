@@ -34,7 +34,7 @@ int main() {
         Chat Chat;
         Money money;
 
-        Player farmer = Player(860, 440, 50, 92, 4, 8, "player.png");
+        Player farmer = Player(860, 440, 64, 96, 4, 8, "player.png");
 
 //============================================================================================================
 
@@ -124,7 +124,7 @@ int main() {
             if (CurrentView == ViewType::Map)
             {
                 farmer.move(CurrentFrame, time);
-                farmer.update(time);
+                farmer.update(time, &Map);
                 Map.Draw(window);
                 window.draw(farmer.mSprite);
                 money.Draw(window);

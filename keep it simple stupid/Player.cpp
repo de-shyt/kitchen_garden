@@ -39,7 +39,37 @@ Player::Player(float x_, float y_, float w_, float h_,
 }
 
 
-void Player::update(float time) {
+void Player::InteractionWithMap(Map* MapPtr) {
+    for (auto& it : MapPtr->BoughtItems) {
+        for (auto& elem : it.second) {
+            if (elem->mSprite.getGlobalBounds().intersects(sf::Rect(sf::Rect(x, y, w, h)))) {
+                std::cout << "elem: " << elem->mSprite.getGlobalBounds().left << ' ' << elem->mSprite.getGlobalBounds().top << ' '
+                << elem->mSprite.getGlobalBounds().width << ' ' << elem->mSprite.getGlobalBounds().height << '\n';
+                std::cout << elem->x << ' ' << elem->y << ' ' << elem->w << ' ' << elem->h << "\n\n";
+                std::cout << "farmer: " << mSprite.getGlobalBounds().left << ' ' << mSprite.getGlobalBounds().top << ' '
+                << mSprite.getGlobalBounds().width << ' ' << mSprite.getGlobalBounds().height << '\n';
+                switch(dir) {
+                    case Direction::Right: {
+                        x = elem->x - w;
+                    } break;
+                    case Direction::Left: {
+                        x = elem->x + elem->w;
+                    } break;
+                    case Direction::Up: {
+                        y = elem->y + elem->h;
+                    } break;
+                    case Direction::Down: {
+                        y = elem->y - h;
+                    } break;
+                }
+                std::cout << "coords: " << x << ' ' << y << "\n\n";
+            }
+        }
+    }
+}
+
+
+void Player::update(float time, Map* MapPtr) {
     switch(dir) {
         case Direction::Right: {
             dx = speed, dy = 0;
@@ -56,6 +86,8 @@ void Player::update(float time) {
     }
     x += dx * time;
     y += dy * time;
+
+    InteractionWithMap(MapPtr);
 
     speed = 0;
     mSprite.setPosition(x, y);

@@ -30,13 +30,16 @@ struct BaseElem {
 
 
 
+struct Map;
+
 struct Player : BaseElem {
     float dx = 0, dy = 0, speed = 0;
     Direction dir = Direction::Right;
 
     Player();
     explicit Player(float x_, float y_, float w_, float h_, float recTop, float recLeft, std::string&& name);
-    void update(float time);
+    void InteractionWithMap(Map* MapPtr);
+    void update(float time, Map* MapPtr);
     void GoLeft(float &CurrentFrame, float &time);
     void GoRight(float &CurrentFrame, float &time);
     void GoUp(float &CurrentFrame, float &time);
