@@ -78,3 +78,4 @@ std::string Menu::CheckBoundaries(sf::Vector2i& MousePos) {
     }
     return "Menu";
 }
+
