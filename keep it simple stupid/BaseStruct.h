@@ -5,15 +5,22 @@
 #include "TextElem.h"
 #include "BaseElem.h"
 #include <unordered_map>
-
+#include <soci/session.h>
+#include <soci/transaction.h>
+#include <soci/backend-loader.h>
+#include <soci/connection-parameters.h>
 
 
 struct BaseStruct {
+    soci::session sql;
+    soci::transaction tr;
+
+    BaseStruct();
     virtual std::string CheckBoundaries(sf::Vector2i& MousePos) = 0;
 };
 
 
-struct Menu : BaseStruct {
+struct Menu : virtual BaseStruct {
     TextElem NewGame;
     TextElem Continue;
     TextElem Settings;
@@ -27,7 +34,7 @@ struct Menu : BaseStruct {
 };
 
 
-struct Map : BaseStruct {
+struct Map : virtual BaseStruct {
     BaseElem BG;
     BaseElem Shop;
     BaseElem Chat;
@@ -46,7 +53,7 @@ struct Map : BaseStruct {
 };
 
 
-struct Shop : BaseStruct {
+struct Shop : virtual BaseStruct {
     BaseElem BG;
     BaseElem Close;
     BaseElem Frame;
@@ -62,7 +69,7 @@ struct Shop : BaseStruct {
 };
 
 
-struct Chat : BaseStruct {
+struct Chat : virtual BaseStruct {
     BaseElem Close;
 
     Chat();
