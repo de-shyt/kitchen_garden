@@ -1,5 +1,6 @@
 #include "BaseStruct.h"
 
+BaseStruct::BaseStruct() : sql("postgresql", "dbname=ferma user=postgres password=Julius_Deshur_Theorem"), tr(sql) {};
 
 Map::Map() :
         IsMove(nullptr), dx(0), dy(0),
