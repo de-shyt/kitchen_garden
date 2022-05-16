@@ -6,6 +6,11 @@
 #include <fstream>
 #include <string>
 
+#include <soci/session.h>
+#include <soci/transaction.h>
+#include <soci/backend-loader.h>
+#include <soci/connection-parameters.h>
+
 enum class Direction {Left, Right, Up, Down};
 
 
