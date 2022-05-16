@@ -105,6 +105,10 @@ void Map::Draw(sf::RenderWindow &window, BaseElem& player)
         sql << "update objects_on_map set x=(:coord_x), y=(:coord_y) where type_id=(:IsMove_Name) and id=(:IsMove_id)",
                 soci::use(coord_x), soci::use(coord_y), soci::use(IsMove_Name), soci::use(IsMove_id);
         tr.commit();
+
+        if (!sql.got_data()) {
+            throw custom_exceptions::unable_to_update_a_table(IsMove_Name, IsMove_id);
+        }
     }
 
     for (auto& it : BoughtItems) {
