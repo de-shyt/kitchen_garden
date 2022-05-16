@@ -3,8 +3,11 @@
 
 
 custom_exceptions::unable_to_open_a_file::unable_to_open_a_file(const std::string& name)
-        : std::runtime_error("Unable to open file '" + name + "'\n") {}
+    : std::runtime_error("Unable to open file '" + name + "'\n") {}
 
+custom_exceptions::unable_to_update_a_table::unable_to_update_a_table(const std::string& type_id, int id)
+    : std::runtime_error("Unable to update objects_on_map "
+                         "with params type_id=" + type_id + ", id=" + std::to_string(id) + "\n") {}
 
 
 BaseElem::BaseElem() = default;

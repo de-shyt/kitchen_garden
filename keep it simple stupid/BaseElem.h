@@ -18,6 +18,10 @@ namespace custom_exceptions {
     struct unable_to_open_a_file : std::runtime_error {
         explicit unable_to_open_a_file(const std::string& name);
     };
+
+    struct unable_to_update_a_table : std::runtime_error {
+        explicit unable_to_update_a_table(const std::string& type_id, int id);
+    };
 }
 
 
