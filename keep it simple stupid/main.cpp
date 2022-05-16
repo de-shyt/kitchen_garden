@@ -20,9 +20,8 @@ ViewType CheckCurrentView(BaseStruct& Struct, sf::Vector2i& MousePos) {
 }
 
 
-int main() {
-    soci::session sql("postgresql", "dbname=ferma user=postgres password=Julius_Deshur_Theorem");
-    soci::transaction tr(sql);
+int main()
+{
 
     auto CurrentView = ViewType::Menu;
 
@@ -126,6 +125,12 @@ int main() {
             {
                 farmer.move(CurrentFrame, time);
                 farmer.update(time, &Map);
+
+                double x = farmer.x, y = farmer.y;
+                soci::transaction tr(Map.sql);
+                Map.sql << "update players set x=(:x), y=(:y)", soci::use(x), soci::use(y);
+                tr.commit();
+
                 Map.Draw(window, farmer);
             }
 

@@ -65,11 +65,15 @@ void Menu::ChangeColor(sf::RenderWindow &window)
 
 
 std::string Menu::CheckBoundaries(sf::Vector2i& MousePos) {
+    if (Continue.mText.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
+        return "Map";
+    }
     if (NewGame.mText.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
         MapPtr->BoughtItems.clear();
+        soci::transaction tr(sql);
         sql << "delete from players";
         sql << "delete from objects_on_map";
-        sql << "insert into players values ('abober')";
+        sql << "insert into players values ('abober', 950, 500)";
         tr.commit();
         return "Map";
     }

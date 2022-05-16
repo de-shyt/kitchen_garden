@@ -13,7 +13,6 @@
 
 struct BaseStruct {
     soci::session sql;
-    soci::transaction tr;
 
     BaseStruct();
     virtual std::string CheckBoundaries(sf::Vector2i& MousePos) = 0;
