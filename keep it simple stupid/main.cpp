@@ -4,6 +4,7 @@
 #include "BaseStruct.h"
 
 
+
 enum class ViewType{ Map, Shop, Chat, Menu, CloseWindow };
 
 ViewType CheckCurrentView(BaseStruct& Struct, sf::Vector2i& MousePos) {
@@ -20,6 +21,8 @@ ViewType CheckCurrentView(BaseStruct& Struct, sf::Vector2i& MousePos) {
 
 
 int main() {
+    soci::session sql("postgresql", "dbname=ferma user=postgres password=Julius_Deshur_Theorem");
+    soci::transaction tr(sql);
 
     auto CurrentView = ViewType::Menu;
 
@@ -30,8 +33,8 @@ int main() {
     {
 //============================================== Creating Elems ==============================================
 
-        Menu Menu;
         Map Map;
+        Menu Menu(&Map);
         Shop Shop(&Map);
         Chat Chat;
 

@@ -1,12 +1,15 @@
 #include "BaseStruct.h"
 
 
-Menu::Menu() :
+Menu::Menu(Map *m) :
     Continue("CyrilicOld.ttf", 65, sf::Color::White, "Continue"),
     NewGame("CyrilicOld.ttf", 65, sf::Color::White, "New game"),
-    Settings("CyrilicOld.ttf", 65, sf::Color::White, "Settings"),
+    Settings("CyrilicOld.ttf", 65, sf::Color::White, ""
+                                                     "Settings"),
     Exit("CyrilicOld.ttf", 65, sf::Color::White, "Exit"),
-    Carrot(BaseElem(600, -150, 918, 950, "carrot.png"))
+    Carrot(BaseElem(600, -150, 918, 950, "carrot.png")),
+
+    MapPtr(m)
 {
     Continue.mText.setPosition(100, 100);
     NewGame.mText.setPosition(100, 220);
@@ -63,6 +66,9 @@ void Menu::ChangeColor(sf::RenderWindow &window)
 
 std::string Menu::CheckBoundaries(sf::Vector2i& MousePos) {
     if (NewGame.mText.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
+        MapPtr->BoughtItems.clear();
+//        очистить таблицу
+//        создать строку в players (bd)
         return "Map";
     }
     if (Exit.mText.getGlobalBounds().contains(MousePos.x, MousePos.y)) {

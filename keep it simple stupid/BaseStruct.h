@@ -19,6 +19,7 @@ struct BaseStruct {
     virtual std::string CheckBoundaries(sf::Vector2i& MousePos) = 0;
 };
 
+struct Map;
 
 struct Menu : virtual BaseStruct {
     TextElem NewGame;
@@ -26,8 +27,9 @@ struct Menu : virtual BaseStruct {
     TextElem Settings;
     TextElem Exit;
     BaseElem Carrot;
+    Map *MapPtr;
 
-    Menu();
+    Menu(Map *m);
     void Draw(sf::RenderWindow& window) const;
     void ChangeColor(sf::RenderWindow& window);
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
