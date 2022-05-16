@@ -91,10 +91,20 @@ void Map::Draw(sf::RenderWindow &window, BaseElem& player)
 
     window.draw(player.mSprite);
 
-    if (IsMove != nullptr) {
+    if (IsMove != nullptr)
+    {
         IsMove->mSprite.setColor(sf::Color::Green);
-        IsMove->x = sf::Mouse::getPosition(window).x - dx;
-        IsMove->y = sf::Mouse::getPosition(window).y - dy;
+
+        double coord_x = sf::Mouse::getPosition(window).x - dx;
+        double coord_y = sf::Mouse::getPosition(window).y - dy;
+
+        IsMove->x = coord_x;
+        IsMove->y = coord_y;
+
+        soci::transaction tr(sql);
+        sql << "update objects_on_map set x=(:coord_x), y=(:coord_y) where type_id=(:IsMove_Name) and id=(:IsMove_id)",
+                soci::use(coord_x), soci::use(coord_y), soci::use(IsMove_Name), soci::use(IsMove_id);
+        tr.commit();
     }
 
     for (auto& it : BoughtItems) {

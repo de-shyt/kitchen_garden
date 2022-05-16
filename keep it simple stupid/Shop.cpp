@@ -46,7 +46,17 @@ std::string Shop::CheckBoundaries(sf::Vector2i& MousePos) {
         if (it.second->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y))
         {
             std::string ItemName = it.second->FileName.substr(0, it.second->FileName.find('.'));
-            MapPtr->BoughtItems[ItemName].push_back(new BaseElem(MousePos.x - 16, MousePos.y - 16, 32, 32, ItemName + "32x32.png"));
+            double coord_x = MousePos.x - 16;
+            double coord_y = MousePos.y - 16;
+            std::size_t id = MapPtr->BoughtItems[ItemName].size();
+
+            MapPtr->BoughtItems[ItemName].push_back(new BaseElem(coord_x, coord_y, 32, 32, ItemName + "32x32.png"));
+
+            soci::transaction tr(sql);
+            sql << "insert into objects_on_map values ((:type_id), (:id), (:coord_x), (:coord_y))",
+                    soci::use(ItemName), soci::use(id), soci::use(coord_x), soci::use(coord_y);
+            tr.commit();
+
             return "Map";
         }
     }

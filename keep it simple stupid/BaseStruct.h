@@ -28,7 +28,7 @@ struct Menu : virtual BaseStruct {
     BaseElem Carrot;
     Map *MapPtr;
 
-    Menu(Map *m);
+    explicit Menu(Map *m);
     void Draw(sf::RenderWindow& window) const;
     void ChangeColor(sf::RenderWindow& window);
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
@@ -43,6 +43,8 @@ struct Map : virtual BaseStruct {
     Money Money;
     std::unordered_map<std::string, std::vector<BaseElem*>> BoughtItems;
     BaseElem* IsMove;
+    std::string IsMove_Name;
+    int IsMove_id;
     int dx;
     int dy;
 
