@@ -55,6 +55,11 @@ std::string Shop::CheckBoundaries(sf::Vector2i& MousePos) {
             soci::transaction tr(sql);
             sql << "insert into objects_on_map values ((:type_id), (:id), (:coord_x), (:coord_y))",
                     soci::use(ItemName), soci::use(id), soci::use(coord_x), soci::use(coord_y);
+            int money;
+            std::string name = "abober";
+            sql << "select money from players where name=(:name)", soci::use(name), soci::into(money);
+            money -= 10;
+            sql << "update players set money = :money", soci::use(money);
             tr.commit();
 
             return "Map";
