@@ -30,12 +30,12 @@ int main()
     {
 //============================================== Creating Elems ==============================================
 
+        Player farmer = Player(0, 0, 64, 96, 4, 8, "player.png");
+
         Map Map;
-        Menu Menu(&Map);
+        Menu Menu(&Map, &farmer);
         Shop Shop(&Map);
         Chat Chat;
-
-        Player farmer = Player(860, 440, 64, 96, 4, 8, "player.png");
 
 //============================================================================================================
 

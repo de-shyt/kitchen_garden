@@ -27,8 +27,9 @@ struct Menu : virtual BaseStruct {
     TextElem Exit;
     BaseElem Carrot;
     Map *MapPtr;
+    Player* PlayerPtr;
 
-    explicit Menu(Map *m);
+    explicit Menu(Map *m, Player *pm);
     void Draw(sf::RenderWindow& window) const;
     void ChangeColor(sf::RenderWindow& window);
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
