@@ -48,14 +48,13 @@ void Menu::ChangeColor(sf::RenderWindow &window)
     if (Continue.mText.getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y))
     {
         double coord_x = INT_MAX;
-        sql << "select x from players where name='abober'", soci::into(coord_x);
+        std::string playername = PlayerPtr->name;
+        sql << "select x from players where name=(:playername)", soci::use(playername), soci::into(coord_x);
 
-        if (coord_x == INT_MAX) {  // => нет сохранённой игры у игрока с именем abober
-            return ;
+        if (coord_x != INT_MAX) {
+            Continue.mText.setFillColor(sf::Color::Blue);
+            Continue.mText.setOutlineColor(sf::Color::Blue);
         }
-
-        Continue.mText.setFillColor(sf::Color::Blue);
-        Continue.mText.setOutlineColor(sf::Color::Blue);
     }
     else if (NewGame.mText.getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)) {
         NewGame.mText.setFillColor(sf::Color::Blue);
@@ -74,31 +73,40 @@ void Menu::ChangeColor(sf::RenderWindow &window)
 
 std::string Menu::CheckBoundaries(sf::Vector2i& MousePos)
 {
+    std::string playername = PlayerPtr->name;
+
     if (Continue.mText.getGlobalBounds().contains(MousePos.x, MousePos.y))
     {
-        double coord_x = INT_MAX, coord_y;
-        sql << "select x, y from players where name='abober'", soci::into(coord_x), soci::into(coord_y);
+        double coord_x = INT_MAX;
+        double coord_y;
 
-        if (coord_x != INT_MAX)   //  => есть сохранённая игра у игрока с именем abober
+        sql << "select x, y from players where name=(:playername)",
+                soci::use(playername), soci::into(coord_x), soci::into(coord_y);
+
+
+        if (coord_x != INT_MAX)    //  => есть сохранённая игра у игрока с именем playername
         {
             PlayerPtr->x = coord_x;
             PlayerPtr->y = coord_y;
 
-            int LineCounter;
-            sql << "select count(*) from objects_on_map", soci::into(LineCounter);
-
-            if (LineCounter > 0 && MapPtr->BoughtItems.empty())
+            if (MapPtr->BoughtItems.empty())  // только начали сохранённую игру
             {
-                int id;
                 std::string type_id;
+                int id;
 
-                sql << "select * from objects_on_map", soci::into(type_id), soci::into(id), soci::into(coord_x), soci::into(coord_y);
+                soci::statement st = (sql.prepare << "select * from objects_on_map",
+                                      soci::into(type_id), soci::into(id), soci::into(coord_x), soci::into(coord_y));
 
-                MapPtr->BoughtItems[type_id].push_back(new BaseElem(coord_x, coord_y, 32, 32, type_id + "32x32.png"));
+                st.execute();
+
+                while (st.fetch()) {
+                    MapPtr->BoughtItems[type_id].push_back(new BaseElem(coord_x, coord_y, 32, 32, type_id + "32x32.png"));
+                }
             }
+            return "Map";
         }
 
-        return "Map";
+        return "Menu";
     }
 
     if (NewGame.mText.getGlobalBounds().contains(MousePos.x, MousePos.y))
@@ -107,14 +115,14 @@ std::string Menu::CheckBoundaries(sf::Vector2i& MousePos)
 
         soci::transaction tr(sql);
 
-        sql << "delete from players where name = 'abober'";
+        sql << "delete from players where name=(:playername)", soci::use(playername);
         sql << "delete from objects_on_map";
 
         PlayerPtr->x = 950;
         PlayerPtr->y = 500;
         PlayerPtr->mSprite.setTextureRect(sf::IntRect(2 * 64, 0, 64, 96));
 
-        sql << "insert into players values ('abober', 950, 500)";
+        sql << "insert into players values ((:playername), 950, 500, 100)", soci::use(playername);
 
         tr.commit();
 
