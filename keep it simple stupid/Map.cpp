@@ -3,7 +3,7 @@
 BaseStruct::BaseStruct() : sql("postgresql", "dbname=ferma user=postgres password=Julius_Deshur_Theorem") {};
 
 Map::Map() :
-        IsMove(nullptr), dx(0), dy(0),
+        IsMove(nullptr), dx(0), dy(0), IsMove_id(0),
         BG(BaseElem(0, 0, 2048, 2048, "grassBG.png")), Shop(BaseElem(50, 50, 100, 100, "shop.png")),
         Chat(BaseElem(50, 200, 100, 100, "chat.png")), Pause(BaseElem(1770, 50, 100, 100, "pause.png")) {}
 
@@ -31,12 +31,15 @@ std::string Map::CheckBoundaries(sf::Vector2i& MousePos)
     }
     for (auto& it : BoughtItems) {
         for (std::size_t i = 0; i < it.second.size(); ++i) {
-            if (it.second[i]->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
+            if (it.second[i]->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y))
+            {
                 IsMove = it.second[i];
-                IsMove_Name = IsMove->FileName.substr(0, IsMove->FileName.find('.'));
+                IsMove_Name = it.first;
                 IsMove_id = i;
+
                 dx = MousePos.x - it.second[i]->mSprite.getPosition().x;
                 dy = MousePos.y - it.second[i]->mSprite.getPosition().y;
+
                 return "Map";
             }
         }
@@ -107,10 +110,6 @@ void Map::Draw(sf::RenderWindow &window, BaseElem& player)
         sql << "update objects_on_map set x=(:coord_x), y=(:coord_y) where type_id=(:IsMove_Name) and id=(:IsMove_id)",
                 soci::use(coord_x), soci::use(coord_y), soci::use(IsMove_Name), soci::use(IsMove_id);
         tr.commit();
-
-        if (!sql.got_data()) {
-            throw custom_exceptions::unable_to_update_a_table(IsMove_Name, IsMove_id);
-        }
     }
 
     for (auto& it : BoughtItems) {

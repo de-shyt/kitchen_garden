@@ -30,7 +30,9 @@ int main()
     {
 //============================================== Creating Elems ==============================================
 
-        Player farmer = Player(0, 0, 64, 96, 4, 8, "player.png");
+        std::string playername = "abober";
+
+        Player farmer = Player(0, 0, 64, 96, 4, 8, "player.png", playername);
 
         Map Map;
         Menu Menu(&Map, &farmer);
@@ -124,9 +126,14 @@ int main()
                 farmer.move(CurrentFrame, time);
                 farmer.update(time, &Map);
 
-                double x = farmer.x, y = farmer.y;
                 soci::transaction tr(Map.sql);
-                Map.sql << "update players set x=(:x), y=(:y)", soci::use(x), soci::use(y);
+
+                double x = farmer.x, y = farmer.y;
+                playername = farmer.name;
+
+                Map.sql << "update players set x=(:x), y=(:y) where name=(:playername)",
+                        soci::use(x), soci::use(y), soci::use(playername);
+
                 tr.commit();
 
                 Map.Draw(window, farmer);
