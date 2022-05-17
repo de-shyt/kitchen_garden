@@ -5,9 +5,6 @@
 custom_exceptions::unable_to_open_a_file::unable_to_open_a_file(const std::string& name)
     : std::runtime_error("Unable to open file '" + name + "'\n") {}
 
-custom_exceptions::unable_to_update_a_table::unable_to_update_a_table(const std::string& type_id, int id)
-    : std::runtime_error("Unable to update objects_on_map "
-                         "with params type_id=" + type_id + ", id=" + std::to_string(id) + "\n") {}
 
 
 BaseElem::BaseElem() = default;
@@ -33,8 +30,8 @@ BaseElem::BaseElem(float x_, float y_, float w_, float h_, std::string &&name) :
 Player::Player() = default;
 
 
-Player::Player(float x_, float y_, float w_, float h_, float recTop, float recLeft, std::string &&name) :
-    BaseElem(x_, y_, w_, h_, std::move(name))
+Player::Player(float x_, float y_, float w_, float h_, float recTop, float recLeft, std::string&& file_name, std::string& player_name) :
+    BaseElem(x_, y_, w_, h_, std::move(file_name)), name(player_name)
 {
     mSprite.setTextureRect(sf::IntRect(recLeft, recTop, w, h));
 }

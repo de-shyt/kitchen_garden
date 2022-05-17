@@ -18,10 +18,6 @@ namespace custom_exceptions {
     struct unable_to_open_a_file : std::runtime_error {
         explicit unable_to_open_a_file(const std::string& name);
     };
-
-    struct unable_to_update_a_table : std::runtime_error {
-        explicit unable_to_update_a_table(const std::string& type_id, int id);
-    };
 }
 
 
@@ -43,9 +39,10 @@ struct Map;
 struct Player : BaseElem {
     float dx = 0, dy = 0, speed = 0;
     Direction dir = Direction::Right;
+    std::string name;
 
     Player();
-    explicit Player(float x_, float y_, float w_, float h_, float recTop, float recLeft, std::string&& name);
+    explicit Player(float x_, float y_, float w_, float h_, float recTop, float recLeft, std::string&& file_name, std::string& player_name);
     void InteractionWithMap(Map* MapPtr);
     void update(float time, Map* MapPtr);
     void GoLeft(float &CurrentFrame, float &time);
