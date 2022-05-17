@@ -30,11 +30,13 @@ std::string Map::CheckBoundaries(sf::Vector2i& MousePos)
         return "Chat";
     }
     for (auto& it : BoughtItems) {
-        for (auto& elem : it.second) {
-            if (elem->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-                IsMove = elem;
-                dx = MousePos.x - elem->mSprite.getPosition().x;
-                dy = MousePos.y - elem->mSprite.getPosition().y;
+        for (std::size_t i = 0; i < it.second.size(); ++i) {
+            if (it.second[i]->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
+                IsMove = it.second[i];
+                IsMove_Name = IsMove->FileName.substr(0, IsMove->FileName.find('.'));
+                IsMove_id = i;
+                dx = MousePos.x - it.second[i]->mSprite.getPosition().x;
+                dy = MousePos.y - it.second[i]->mSprite.getPosition().y;
                 return "Map";
             }
         }
