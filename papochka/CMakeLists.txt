@@ -3,9 +3,7 @@ cmake_minimum_required(VERSION 3.20)
 project(ferma)
 set(CMAKE_CXX_STANDARD 17)
 
-#add_executable(ferma main.cpp BaseElem.cpp Menu.cpp Map.cpp Shop.cpp Chat.cpp TextElem.cpp)
-add_executable(ferma test.cpp)
-#add_executable(ferma MultiplayerProject_Client.cpp MultiplayerProject_Server.cpp NetworkClient.cpp NetworkServer.cpp)
+add_executable(ferma test_ser.cpp)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/msys64/mingw64/lib/cmake/SFML)
