@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.20)
 project(ferma)
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(ferma test_ser.cpp)
+add_executable(ferma test.cpp)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/msys64/mingw64/lib/cmake/SFML)
