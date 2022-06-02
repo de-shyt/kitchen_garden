@@ -32,6 +32,12 @@ struct BaseElem {
     explicit BaseElem(float x_, float y_, float w_, float h_, std::string&& name);
 };
 
+struct Rabatka : BaseElem {
+    BaseElem* product;
+
+    Rabatka();
+    explicit Rabatka(float x_, float y_, float w_, float h_, std::string&& name);
+};
 
 
 struct Map;

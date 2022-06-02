@@ -25,7 +25,11 @@ BaseElem::BaseElem(float x_, float y_, float w_, float h_, std::string &&name) :
 
 }
 
+Rabatka::Rabatka() = default;
 
+
+Rabatka::Rabatka(float x_, float y_, float w_, float h_, std::string&& name)
+        : BaseElem(x_, y_, w_, h_, std::move(name)), product(nullptr) {}
 
 Player::Player() = default;
 
