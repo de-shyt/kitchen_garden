@@ -51,6 +51,8 @@ std::string Shop::CheckBoundaries(sf::Vector2i& MousePos) {
             std::size_t id = MapPtr->BoughtItems[ItemName].size();
 
             MapPtr->BoughtItems[ItemName].push_back(new BaseElem(coord_x, coord_y, 32, 32, ItemName + "32x32.png"));
+            MapPtr->IsMove = MapPtr->BoughtItems[ItemName].back();
+            MapPtr->dx = 16, MapPtr->dy = 16;
 
             soci::transaction tr(sql);
             sql << "insert into objects_on_map values ((:type_id), (:id), (:coord_x), (:coord_y))",

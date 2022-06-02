@@ -5,21 +5,44 @@
 
 struct Client {
     std::string name;
-    sf::IpAddress ip = sf::IpAddress::getLocalAddress();
+    sf::IpAddress ip;
     sf::TcpSocket socket;
-    sf::Vector2f pos{10, 10};
+    sf::Vector2f pos;
+    sf::CircleShape shape;
+
+    Client() {
+        pos.x = 10, pos.y = 10;
+    }
+
+    explicit Client(std::string& name_, sf::IpAddress& ip_, sf::TcpSocket& socket_, int x, int y) :
+        name(name_), ip(ip_)
+    {
+        pos.x = 10, pos.y = 10;
+        shape = sf::CircleShape(20);
+    }
 };
 
 struct Server {
     sf::TcpListener listener;
     sf::Packet packet;
-    std::vector<Client> client_vec;
+    std::vector<Client*> client_vec;
+
+    void draw(sf::RenderWindow& window) {
+        window.clear();
+        for (auto& client : client_vec) {
+            client->shape.setPosition(client->pos.x, client->pos.y);
+            window.draw(client->shape);
+        }
+        window.display();
+    }
 };
 
-//Server server;
 
 
 int main() {
+    Server server;
+    Client client;
+
     sf::TcpSocket socket; // to receive/send messages
     sf::TcpSocket socket2;
     // getRemoteAddress() and getRemotePort() can be used
@@ -36,17 +59,29 @@ int main() {
 
     if(mode == 's') {
         std::cout << "your ip is:" << sf::IpAddress::getLocalAddress() << std::endl; // get address of the host
-        sf::TcpListener listener;
-        listener.listen(2000);
-        listener.accept(socket);
-        text = "Hello new client";
-    } else if(mode == 'c') {
-        sf::IpAddress ip;
-        std::cout << "insert ip:";
-        std::cin >> ip;
-        text = "JULIUS IS HERE";
+//        sf::TcpListener listener;
+        server.listener.listen(2000);
+        server.listener.accept(socket);
+        text = "Hello new client ";
 
-        socket.connect(ip, 2000);
+    } else if(mode == 'c') {
+
+//        sf::IpAddress ip;
+        std::cout << "enter ip: ";
+        std::cin >> client.ip;
+        std::cout << "enter name: ";
+        std::cin >> client.name;
+        text = client.name + " is here";
+
+        auto status = socket.connect(client.ip, 2000);
+        if (status == sf::Socket::Done) {
+            server.client_vec.push_back(&client);
+            text += client.name + '\n';
+        }
+        else {
+            std::cout << "error while connecting to server\n";
+            return 0;
+        }
     }
 
     char buffer[100];
@@ -60,7 +95,7 @@ int main() {
 
     float x = 0, y = 0;
     sf::RenderWindow window(sf::VideoMode(800, 600), "window");
-    sf::CircleShape shape(10);
+    sf::CircleShape shape(20);
 
     while(window.isOpen()){
 
@@ -71,14 +106,19 @@ int main() {
             }
 
         }
-        if(mode == 's'){
+        if (mode == 's')
+        {
             socket.receive(packet);
-            if(packet >> x >> y){
-                std::cout << x << ":" << y << std::endl;
+
+            if (packet >> text) {
+                std::cout << text;
             }
+
+            server.draw(window);
         }
 
-        if(mode == 'c'){
+        else if (mode == 'c')
+        {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
                 x++;
             }
@@ -93,11 +133,22 @@ int main() {
                 y--;
             }
 
-            packet << x << y;
-            socket.send(packet);
-            packet.clear();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                std::cin >> text;
+                packet.clear();
+                packet << client.name << ": " << text << '\n';
+                socket.send(packet);
+            }
         }
+
         window.clear();
+
+        for (auto& client : server.client_vec) {
+            client->shape.setFillColor(sf::Color::Red);
+            client->shape.setPosition(client->pos.x, client->pos.y);
+            window.draw(client->shape);
+        }
+
         shape.setPosition(x, y);
         window.draw(shape);
         window.display();
