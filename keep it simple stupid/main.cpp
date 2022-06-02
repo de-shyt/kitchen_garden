@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
 #include <iostream>
 #include "BaseElem.h"
 #include "BaseStruct.h"
@@ -20,11 +21,23 @@ ViewType CheckCurrentView(BaseStruct& Struct, sf::Vector2i& MousePos) {
 
 int main()
 {
-
     auto CurrentView = ViewType::Menu;
-
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "POTATO SIMULATOR");
 
+//============================================== SET' ==============================================
+
+
+    sf::TcpSocket socket;
+    unsigned short port = 45000;
+    sf::IpAddress ip = "localhost";
+
+    std::vector<sf::Sprite> remotePlayers;
+//    std::vector<std::unique_ptr<CoFarmer>> cofarmers;
+//    std::unique_ptr<Network> network = std::make_unique<Network>(ip, port);
+
+    sf::Vector2f lastDirSent;
+
+    socket.setBlocking(false);
 
     try
     {
@@ -44,75 +57,65 @@ int main()
         sf::Clock Clock;
         float CurrentFrame = 0;
 
-        while (window.isOpen())
-        {
-            float time = Clock.getElapsedTime().asMicroseconds() / 800;
-            Clock.restart();
-
-            sf::Vector2i MousePos = sf::Mouse::getPosition(window);
-
-            sf::Event event{};
-            while (window.pollEvent(event))
+            while (window.isOpen())
             {
-                if (event.type == sf::Event::Closed) {
-                    window.close();
-                }
+                float time = Clock.getElapsedTime().asMicroseconds() / 800;
+                Clock.restart();
 
-                if (event.type == sf::Event::KeyPressed)                                                // Keyboard
-                {
-                    if (event.key.code == sf::Keyboard::Tab)
-                    {
-                        if (CurrentView == ViewType::Map) {
-                            CurrentView = ViewType::Shop;
-                        }
-                        else if (CurrentView == ViewType::Shop) {
-                            CurrentView = ViewType::Map;
-                        }
-                    }
-                    else if (event.key.code == sf::Keyboard::Escape) {
-                        if (CurrentView == ViewType::Chat || CurrentView == ViewType::Shop) {
-                            CurrentView = ViewType::Map;
-                        }
-                        else if (CurrentView == ViewType::Map) {
-                            CurrentView = ViewType::Menu;
-                        }
-                        else if (CurrentView == ViewType::Menu) {
+                sf::Vector2i MousePos = sf::Mouse::getPosition(window);
+
+                sf::Event event{};
+                while (window.pollEvent(event)) {
+                    switch (event.type) {
+                        case sf::Event::Closed:
                             window.close();
-                        }
+                            break;
+                        case sf::Event::KeyPressed:
+                            if (event.key.code == sf::Keyboard::Tab)
+                            {
+                                if (CurrentView == ViewType::Map) {
+                                    CurrentView = ViewType::Shop;
+                                }
+                                else if (CurrentView == ViewType::Shop) {
+                                    CurrentView = ViewType::Map;
+                                }
+                            } else if (event.key.code == sf::Keyboard::Escape) {
+                                if (CurrentView == ViewType::Chat || CurrentView == ViewType::Shop) {
+                                    CurrentView = ViewType::Map;
+                                }
+                                else if (CurrentView == ViewType::Map) {
+                                    CurrentView = ViewType::Menu;
+                                }
+                                else if (CurrentView == ViewType::Menu) {
+                                    window.close();
+                                }
+                            }
+                            break;
+                        case sf::Event::MouseButtonPressed:
+                            if (event.mouseButton.button == sf::Mouse::Left) {
+                                if (CurrentView == ViewType::Map) {
+                                    CurrentView = CheckCurrentView(Map, MousePos);
+                                }
+                                else if (CurrentView == ViewType::Shop) {
+                                    CurrentView = CheckCurrentView(Shop, MousePos);
+                                }
+                                else if (CurrentView == ViewType::Chat) {
+                                    CurrentView = CheckCurrentView(Chat, MousePos);
+                                }
+                                else if (CurrentView == ViewType::Menu) {
+                                    CurrentView = CheckCurrentView(Menu, MousePos);
+                                }
+                            }
+                            break;
+                        case sf::Event::MouseButtonReleased:
+                            if (event.mouseButton.button == sf::Mouse::Left) {
+                                if (CurrentView == ViewType::Map) {
+                                    Map.CheckOverlap();
+                                }
+                            }
+                            break;
                     }
                 }
-
-                else if (event.type == sf::Event::MouseButtonPressed)                               // Mouse Buttons
-                {
-                    if (event.mouseButton.button == sf::Mouse::Left)
-                    {
-                        if (CurrentView == ViewType::Map) {
-                            CurrentView = CheckCurrentView(Map, MousePos);
-                        }
-                        else if (CurrentView == ViewType::Shop) {
-                            CurrentView = CheckCurrentView(Shop, MousePos);
-
-                        }
-                        else if (CurrentView == ViewType::Chat) {
-                            CurrentView = CheckCurrentView(Chat, MousePos);
-                        }
-                        else if (CurrentView == ViewType::Menu) {
-                            CurrentView = CheckCurrentView(Menu, MousePos);
-                        }
-                    }
-                }
-
-                else if (event.type == sf::Event::MouseButtonReleased)
-                {
-                    if (event.mouseButton.button == sf::Mouse::Left)
-                    {
-                        if (CurrentView == ViewType::Map)
-                        {
-                            Map.CheckOverlap();
-                        }
-                    }
-                }
-            }
 
 
 //============================================== Draw ========================================================
@@ -120,47 +123,38 @@ int main()
 
             window.clear(sf::Color(34, 177, 76));
 
+                switch (CurrentView) {
+                    case ViewType::Shop:
+                        Shop.ChangeColor(window, MousePos);
+                        Shop.Draw(window);
+                        break;
+                    case ViewType::Chat:
+                        Chat.Draw(window);
+                        break;
+                    case ViewType::Menu:
+                        Menu.ChangeColor(window);
+                        Menu.Draw(window);
+                        break;
+                    case ViewType::CloseWindow:
+                        window.close();
+                        break;
+                    case ViewType::Map:
+                        farmer.move(CurrentFrame, time);
+                        farmer.update(time, &Map);
 
-            if (CurrentView == ViewType::Map)
-            {
-                farmer.move(CurrentFrame, time);
-                farmer.update(time, &Map);
+                        soci::transaction tr(Map.sql);
 
-                soci::transaction tr(Map.sql);
+                        double x = farmer.x, y = farmer.y;
+                        playername = farmer.name;
 
-                double x = farmer.x, y = farmer.y;
-                playername = farmer.name;
+                        Map.sql << "update players set x=(:x), y=(:y) where name=(:playername)",
+                                soci::use(x), soci::use(y), soci::use(playername);
 
-                Map.sql << "update players set x=(:x), y=(:y) where name=(:playername)",
-                        soci::use(x), soci::use(y), soci::use(playername);
+                        tr.commit();
 
-                tr.commit();
-
-                Map.Draw(window, farmer);
-            }
-
-            else if (CurrentView == ViewType::Shop)
-            {
-                Shop.ChangeColor(window, MousePos);
-                Shop.Draw(window);
-            }
-
-            else if (CurrentView == ViewType::Chat)
-            {
-                Chat.Draw(window);
-            }
-
-            else if (CurrentView == ViewType::Menu)
-            {
-                Menu.ChangeColor(window);
-                Menu.Draw(window);
-            }
-
-            else // if (CurrentView == ViewType::CloseWindow)
-            {
-                window.close();
-            }
-
+                        Map.Draw(window, farmer);
+                        break;
+                }
 
 
 //============================================= Display ==============================================================
