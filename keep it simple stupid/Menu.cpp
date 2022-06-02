@@ -100,7 +100,7 @@ std::string Menu::CheckBoundaries(sf::Vector2i& MousePos)
                 st.execute();
 
                 while (st.fetch()) {
-                    MapPtr->BoughtItems[type_id].push_back(new BaseElem(coord_x, coord_y, 32, 32, type_id + "32x32.png"));
+                    MapPtr->BoughtItems[type_id].push_back(new BaseElem(coord_x, coord_y, 32, 32, type_id + "50x50.png"));
                 }
             }
             return "Map";

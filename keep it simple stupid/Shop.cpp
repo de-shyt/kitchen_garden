@@ -12,6 +12,8 @@ Shop::Shop(Map* map_ptr) :
         Items["rabatka"] = new BaseElem(0, 0, 360, 360, "rabatka.png");
         Items["donut"] = new BaseElem(0, 0, 360, 360, "donut.png");
         Items["diploma"] = new BaseElem(0, 0, 360, 360, "diploma.png");
+        Items["tomato"] = new BaseElem(0, 0, 360, 360, "tomato.png");
+        Items["cucumber"] = new BaseElem(0, 0, 360, 360, "cucumber.png");
 
         int coord = 0;
         for (auto it = Items.begin(); it != Items.end(); it++, coord++) {
@@ -50,9 +52,10 @@ std::string Shop::CheckBoundaries(sf::Vector2i& MousePos) {
             double coord_y = MousePos.y - 16;
             std::size_t id = MapPtr->BoughtItems[ItemName].size();
 
-            MapPtr->BoughtItems[ItemName].push_back(new BaseElem(coord_x, coord_y, 32, 32, ItemName + "32x32.png"));
+            MapPtr->BoughtItems[ItemName].push_back(new BaseElem(coord_x, coord_y, 50, 50, ItemName + "50x50.png"));
             MapPtr->IsMove = MapPtr->BoughtItems[ItemName].back();
-            MapPtr->dx = 16, MapPtr->dy = 16;
+            MapPtr->IsMove_id = MapPtr->BoughtItems[ItemName].size() - 1;
+            MapPtr->dx = 25, MapPtr->dy = 25;
 
             soci::transaction tr(sql);
             sql << "insert into objects_on_map values ((:type_id), (:id), (:coord_x), (:coord_y))",
