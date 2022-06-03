@@ -4,6 +4,7 @@
 #include "BaseElem.h"
 #include "BaseStruct.h"
 
+// abracadabra!
 enum class ViewType{ Map, Shop, Chat, Menu, CloseWindow };
 
 ViewType CheckCurrentView(BaseStruct& Struct, sf::Vector2i& MousePos) {
