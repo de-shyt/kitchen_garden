@@ -1,8 +1,0 @@
-# ninja log v5
-2	965	6755260786183401	CMakeFiles/ferma.dir/NetworkClient.cpp.obj	5936c729699fd921
-15	1168	6755260788280741	CMakeFiles/ferma.dir/MultiplayerProject_Client.cpp.obj	2b700dfcd03b7a88
-1169	1537	6755260791869121	ferma.exe	cc92970dd719878d
-7	1102	6755263402174349	CMakeFiles/ferma.dir/MultiplayerProject_Client.cpp.obj	2b700dfcd03b7a88
-1103	1416	6755263405268151	ferma.exe	cc92970dd719878d
-6	1100	6755264552144245	CMakeFiles/ferma.dir/MultiplayerProject_Client.cpp.obj	2b700dfcd03b7a88
-1101	1433	6755264555512996	ferma.exe	cc92970dd719878d

@@ -2,14 +2,14 @@
 
 
 Menu::Menu(Map *m, Player* pm) :
-        Continue("CyrilicOld.ttf", 65, sf::Color::White, "Continue"),
-        NewGame("CyrilicOld.ttf", 65, sf::Color::White, "New game"),
-        Settings("CyrilicOld.ttf", 65, sf::Color::White, ""
-                                                         "Settings"),
-        Exit("CyrilicOld.ttf", 65, sf::Color::White, "Exit"),
-        Carrot(BaseElem(600, -150, 918, 950, "carrot.png")),
+    Continue("CyrilicOld.ttf", 65, sf::Color::White, "Continue"),
+    NewGame("CyrilicOld.ttf", 65, sf::Color::White, "New game"),
+    Settings("CyrilicOld.ttf", 65, sf::Color::White, ""
+                                                     "Settings"),
+    Exit("CyrilicOld.ttf", 65, sf::Color::White, "Exit"),
+    Carrot(BaseElem(600, -150, 918, 950, "carrot.png")),
 
-        MapPtr(m), PlayerPtr(pm)
+    MapPtr(m), PlayerPtr(pm)
 {
     Continue.mText.setPosition(100, 100);
     NewGame.mText.setPosition(100, 220);
@@ -95,7 +95,7 @@ std::string Menu::CheckBoundaries(sf::Vector2i& MousePos)
                 int id;
 
                 soci::statement st = (sql.prepare << "select * from objects_on_map",
-                        soci::into(type_id), soci::into(id), soci::into(coord_x), soci::into(coord_y));
+                                      soci::into(type_id), soci::into(id), soci::into(coord_x), soci::into(coord_y));
 
                 st.execute();
 

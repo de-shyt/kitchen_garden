@@ -1,6 +1,6 @@
 CMakeFiles/ferma.dir/BaseElem.cpp.obj: \
- C:\Users\mi\labs_cpp\labs-JuliaKud\ferma\keep\ it\ simple\ stupid\BaseElem.cpp \
- C:\Users\mi\labs_cpp\labs-JuliaKud\ferma\keep\ it\ simple\ stupid\BaseElem.h \
+ C:\Users\NB\FOLDER\ferma\keep\ it\ simple\ stupid\BaseElem.cpp \
+ C:\Users\NB\FOLDER\ferma\keep\ it\ simple\ stupid\BaseElem.h \
  C:/msys64/mingw64/include/SFML/Graphics.hpp \
  C:/msys64/mingw64/include/SFML/Window.hpp \
  C:/msys64/mingw64/include/SFML/System.hpp \
@@ -709,6 +709,6 @@ CMakeFiles/ferma.dir/BaseElem.cpp.obj: \
  C:/msys64/mingw64/include/soci/logger.h \
  C:/msys64/mingw64/include/soci/transaction.h \
  C:/msys64/mingw64/include/soci/backend-loader.h \
- C:\Users\mi\labs_cpp\labs-JuliaKud\ferma\keep\ it\ simple\ stupid\BaseStruct.h \
- C:\Users\mi\labs_cpp\labs-JuliaKud\ferma\keep\ it\ simple\ stupid\TextElem.h \
+ C:\Users\NB\FOLDER\ferma\keep\ it\ simple\ stupid\BaseStruct.h \
+ C:\Users\NB\FOLDER\ferma\keep\ it\ simple\ stupid\TextElem.h \
  C:/msys64/mingw64/include/c++/11.3.0/iostream

@@ -8,20 +8,20 @@ Shop::Shop(Map* map_ptr) :
         Close(BaseElem(1770, 50, 100, 100, "close.png")),
         Frame(BaseElem(220, 220, 360, 360, "frame.png")),
         MapPtr(map_ptr)
-{
-    Items["garden_bed"] = new BaseElem(0, 0, 360, 360, "garden_bed.png");
-    Items["donut"] = new BaseElem(0, 0, 360, 360, "donut.png");
-    Items["diploma"] = new BaseElem(0, 0, 360, 360, "diploma.png");
-    Items["tomato"] = new BaseElem(0, 0, 360, 360, "tomato.png");
-    Items["cucumber"] = new BaseElem(0, 0, 360, 360, "cucumber.png");
+    {
+        Items["garden_bed"] = new BaseElem(0, 0, 360, 360, "garden_bed.png");
+        Items["donut"] = new BaseElem(0, 0, 360, 360, "donut.png");
+        Items["diploma"] = new BaseElem(0, 0, 360, 360, "diploma.png");
+        Items["tomato"] = new BaseElem(0, 0, 360, 360, "tomato.png");
+        Items["cucumber"] = new BaseElem(0, 0, 360, 360, "cucumber.png");
 
-    int coord = 0;
-    for (auto it = Items.begin(); it != Items.end(); it++, coord++) {
-        it->second->x = 180 + 400 * (coord % 4);
-        it->second->y = 180 + 400 * (coord / 4);
-        it->second->mSprite.setPosition(it->second->x, it->second->y);
+        int coord = 0;
+        for (auto it = Items.begin(); it != Items.end(); it++, coord++) {
+            it->second->x = 180 + 400 * (coord % 4);
+            it->second->y = 180 + 400 * (coord / 4);
+            it->second->mSprite.setPosition(it->second->x, it->second->y);
+        }
     }
-}
 
 
 

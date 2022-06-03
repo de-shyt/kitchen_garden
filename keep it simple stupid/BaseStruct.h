@@ -68,7 +68,7 @@ struct Map : virtual BaseStruct {
     int dy;
 
     std::vector<std::string> AllGardenBedPlantsNames {
-            "tomato", "cucumber", "potato", "carrot"
+        "tomato", "cucumber", "potato", "carrot"
     };
 
 

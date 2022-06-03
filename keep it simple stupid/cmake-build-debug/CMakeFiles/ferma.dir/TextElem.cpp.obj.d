@@ -1,6 +1,6 @@
 CMakeFiles/ferma.dir/TextElem.cpp.obj: \
- C:\Users\mi\labs_cpp\labs-JuliaKud\ferma\keep\ it\ simple\ stupid\TextElem.cpp \
- C:\Users\mi\labs_cpp\labs-JuliaKud\ferma\keep\ it\ simple\ stupid\TextElem.h \
+ C:\Users\NB\FOLDER\ferma\keep\ it\ simple\ stupid\TextElem.cpp \
+ C:\Users\NB\FOLDER\ferma\keep\ it\ simple\ stupid\TextElem.h \
  C:/msys64/mingw64/include/c++/11.3.0/iostream \
  C:/msys64/mingw64/include/c++/11.3.0/x86_64-w64-mingw32/bits/c++config.h \
  C:/msys64/mingw64/include/c++/11.3.0/x86_64-w64-mingw32/bits/os_defines.h \
