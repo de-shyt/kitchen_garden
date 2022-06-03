@@ -175,6 +175,14 @@ void Map::Draw(sf::RenderWindow &window, BaseElem& player)
 }
 
 
+
+void Map::Clear() {
+    BoughtItems.clear();
+    GardenBedPlants.clear();
+    GardenBeds.clear();
+}
+
+
 int Map::CreateStructForNewItem(std::string& type_id, int coord_x, int coord_y)
 {
     if (type_id == "garden_bed") {
