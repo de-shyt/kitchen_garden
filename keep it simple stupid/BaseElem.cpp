@@ -3,15 +3,17 @@
 
 
 custom_exceptions::unable_to_open_a_file::unable_to_open_a_file(const std::string& name)
-    : std::runtime_error("Unable to open file '" + name + "'\n") {}
+        : std::runtime_error("Unable to open file '" + name + "'\n") {}
 
 
+
+// ============================================ BaseElem ==========================================================
 
 BaseElem::BaseElem() = default;
 
 
 BaseElem::BaseElem(float x_, float y_, float w_, float h_, std::string &&name) :
-    x(x_), y(y_), w(w_), h(h_), FileName(std::move(name))
+        x(x_), y(y_), w(w_), h(h_), FileName(std::move(name))
 {
     std::ifstream f("images/" + FileName);
     if (!f.is_open()) {
@@ -22,20 +24,74 @@ BaseElem::BaseElem(float x_, float y_, float w_, float h_, std::string &&name) :
     mTexture.loadFromImage(mImage);
     mSprite.setTexture(mTexture);
     mSprite.setPosition(x, y);
-
 }
 
-Rabatka::Rabatka() = default;
 
 
-Rabatka::Rabatka(float x_, float y_, float w_, float h_, std::string&& name)
-        : BaseElem(x_, y_, w_, h_, std::move(name)), product(nullptr) {}
+
+
+// ============================================= MapElem ==========================================================
+
+MapElem::MapElem() = default;
+
+
+MapElem::MapElem(float x_, float y_, float w_, float h_, std::string&& name, std::string&& type_id_, int id_)
+        : BaseElem(x_, y_, w_, h_, std::move(name)),
+          type_id(std::move(type_id_)), id(id_) {}
+
+
+MapElem::MapElem(float x_, float y_, float w_, float h_, std::string&& name, std::string& type_id_, int id_)
+        : BaseElem(x_, y_, w_, h_, std::move(name)),
+          type_id(type_id_), id(id_) {}
+
+
+
+// ============================================ GardenBed ==========================================================
+
+GardenBed::GardenBed() : product(nullptr) {}
+
+
+GardenBed::GardenBed(float x_, float y_, float w_, float h_, std::string&& name, int id_)
+        : BaseElem(x_, y_, w_, h_, std::move(name)),
+          id(id_), product(nullptr) {}
+
+
+void GardenBed::CheckProductCoords()
+{
+    if (product == nullptr) {
+        return;
+    }
+    product->x = x;
+    product->y = y + h - product->h;
+    product->mSprite.setPosition(product->x, product->y);
+}
+
+
+
+
+// ============================================= GardenBedElem =====================================================
+
+GardenBedElem::GardenBedElem() = default;
+
+
+GardenBedElem::GardenBedElem(float x_, float y_, float w_, float h_, std::string&& name, std::string&& type_id_, int id_)
+        : BaseElem(x_, y_, w_, h_, std::move(name)),
+          type_id(std::move(type_id_)), id(id_) {}
+
+
+GardenBedElem::GardenBedElem(float x_, float y_, float w_, float h_, std::string&& name, std::string& type_id_, int id_)
+        : BaseElem(x_, y_, w_, h_, std::move(name)),
+          type_id(type_id_), id(id_) {}
+
+
+
+// ============================================= Player ===========================================================
 
 Player::Player() = default;
 
 
 Player::Player(float x_, float y_, float w_, float h_, float recTop, float recLeft, std::string&& file_name, std::string& player_name) :
-    BaseElem(x_, y_, w_, h_, std::move(file_name)), name(player_name)
+        BaseElem(x_, y_, w_, h_, std::move(file_name)), name(player_name)
 {
     mSprite.setTextureRect(sf::IntRect(recLeft, recTop, w, h));
 }

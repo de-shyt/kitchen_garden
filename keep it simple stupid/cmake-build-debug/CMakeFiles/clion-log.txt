@@ -1,0 +1,5 @@
+"C:\Program Files\JetBrains\CLion 2022.1.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" -S "C:\Users\mi\labs_cpp\labs-JuliaKud\ferma\keep it simple stupid" -B "C:\Users\mi\labs_cpp\labs-JuliaKud\ferma\keep it simple stupid\cmake-build-debug"
+-- Found SFML 2.5.1 in C:/msys64/mingw64/lib/cmake/SFML
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/keep it simple stupid/cmake-build-debug

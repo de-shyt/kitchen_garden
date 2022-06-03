@@ -32,12 +32,37 @@ struct BaseElem {
     explicit BaseElem(float x_, float y_, float w_, float h_, std::string&& name);
 };
 
-struct Rabatka : BaseElem {
-    BaseElem* product;
 
-    Rabatka();
-    explicit Rabatka(float x_, float y_, float w_, float h_, std::string&& name);
+struct MapElem : BaseElem { // объекты, которые не грядка и не растение на грядке
+    std::string type_id;
+    int id;
+
+    MapElem();
+    explicit MapElem(float x_, float y_, float w_, float h_, std::string&& name, std::string&& type_id_, int id_);
+    explicit MapElem(float x_, float y_, float w_, float h_, std::string&& name, std::string& type_id_, int id_);
 };
+
+
+struct GardenBedElem : BaseElem { // растения, живущие на грядке
+    std::string type_id;
+    int id;
+
+    GardenBedElem();
+    explicit GardenBedElem(float x_, float y_, float w_, float h_, std::string&& name, std::string&& type_id_, int id_);
+    explicit GardenBedElem(float x_, float y_, float w_, float h_, std::string&& name, std::string& type_id_, int id_);
+};
+
+
+struct GardenBed : BaseElem { // грядка
+    int id;
+    GardenBedElem* product;
+
+    GardenBed();
+    explicit GardenBed(float x_, float y_, float w_, float h_, std::string&& name, int id_);
+    void CheckProductCoords();
+};
+
+
 
 
 struct Map;

@@ -36,27 +36,6 @@ struct Menu : virtual BaseStruct {
 };
 
 
-struct Map : virtual BaseStruct {
-    BaseElem BG;
-    BaseElem Shop;
-    BaseElem Chat;
-    BaseElem Pause;
-    Money Money;
-    std::unordered_map<std::string, std::vector<BaseElem*>> BoughtItems;
-    BaseElem* IsMove;
-    std::string IsMove_Name;
-    int IsMove_id;
-    int dx;
-    int dy;
-
-    Map();
-    ~Map();
-    std::string CheckBoundaries(sf::Vector2i& MousePos) override;
-    void Draw(sf::RenderWindow& window, BaseElem& player);
-    void CheckOverlap();
-};
-
-
 struct Shop : virtual BaseStruct {
     BaseElem BG;
     BaseElem Close;
@@ -71,6 +50,37 @@ struct Shop : virtual BaseStruct {
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
     void ChangeColor(sf::RenderWindow& window, sf::Vector2i& MousePos);
 };
+
+
+struct Map : virtual BaseStruct {
+    BaseElem BG;
+    BaseElem Shop;
+    BaseElem Chat;
+    BaseElem Pause;
+    Money Money;
+    std::unordered_map<std::string, std::vector<MapElem*>> BoughtItems;
+    std::vector<GardenBed*> GardenBeds;
+    std::unordered_map<std::string, std::vector<GardenBedElem*>> GardenBedPlants;
+    BaseElem* IsMove;
+    std::string IsMove_type_id;
+    int IsMove_id;
+    int dx;
+    int dy;
+
+    std::vector<std::string> AllGardenBedPlantsNames {
+            "tomato", "cucumber", "potato", "carrot"
+    };
+
+
+
+    Map();
+    ~Map();
+    std::string CheckBoundaries(sf::Vector2i& MousePos) override;
+    void Draw(sf::RenderWindow& window, BaseElem& player);
+    void CheckOverlap(sf::Vector2i& MousePos);
+    int CreateStructForNewItem(std::string& type_id, int coord_x, int coord_y);
+};
+
 
 
 struct Chat : virtual BaseStruct {

@@ -1,0 +1,7 @@
+# ninja log v5
+4	1325	6759770471593394	CMakeFiles/source.dir/CoFarmer.cpp.obj	6a488b5cad87732d
+37	1344	6759770471703258	CMakeFiles/source.dir/Player.cpp.obj	cd2c907b55020f3f
+28	1503	6759770473320879	CMakeFiles/source.dir/main.cpp.obj	471824f64d1d22a7
+32	1815	6759770476426150	CMakeFiles/source.dir/Game.cpp.obj	c37a7e31a801a056
+23	2027	6759770478479372	CMakeFiles/source.dir/Network.cpp.obj	21be209623d45258
+2027	2436	6759770482590893	source.exe	a9666d1ec4b5bdfa

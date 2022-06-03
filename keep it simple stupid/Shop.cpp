@@ -8,20 +8,20 @@ Shop::Shop(Map* map_ptr) :
         Close(BaseElem(1770, 50, 100, 100, "close.png")),
         Frame(BaseElem(220, 220, 360, 360, "frame.png")),
         MapPtr(map_ptr)
-    {
-        Items["rabatka"] = new BaseElem(0, 0, 360, 360, "rabatka.png");
-        Items["donut"] = new BaseElem(0, 0, 360, 360, "donut.png");
-        Items["diploma"] = new BaseElem(0, 0, 360, 360, "diploma.png");
-        Items["tomato"] = new BaseElem(0, 0, 360, 360, "tomato.png");
-        Items["cucumber"] = new BaseElem(0, 0, 360, 360, "cucumber.png");
+{
+    Items["garden_bed"] = new BaseElem(0, 0, 360, 360, "garden_bed.png");
+    Items["donut"] = new BaseElem(0, 0, 360, 360, "donut.png");
+    Items["diploma"] = new BaseElem(0, 0, 360, 360, "diploma.png");
+    Items["tomato"] = new BaseElem(0, 0, 360, 360, "tomato.png");
+    Items["cucumber"] = new BaseElem(0, 0, 360, 360, "cucumber.png");
 
-        int coord = 0;
-        for (auto it = Items.begin(); it != Items.end(); it++, coord++) {
-            it->second->x = 180 + 400 * (coord % 4);
-            it->second->y = 180 + 400 * (coord / 4);
-            it->second->mSprite.setPosition(it->second->x, it->second->y);
-        }
+    int coord = 0;
+    for (auto it = Items.begin(); it != Items.end(); it++, coord++) {
+        it->second->x = 180 + 400 * (coord % 4);
+        it->second->y = 180 + 400 * (coord / 4);
+        it->second->mSprite.setPosition(it->second->x, it->second->y);
     }
+}
 
 
 
@@ -40,7 +40,8 @@ void Shop::Draw(sf::RenderWindow &window) {
     }
 }
 
-std::string Shop::CheckBoundaries(sf::Vector2i& MousePos) {
+std::string Shop::CheckBoundaries(sf::Vector2i& MousePos)
+{
     if (Close.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
         return "Map";
     }
@@ -48,14 +49,11 @@ std::string Shop::CheckBoundaries(sf::Vector2i& MousePos) {
         if (it.second->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y))
         {
             std::string ItemName = it.second->FileName.substr(0, it.second->FileName.find('.'));
-            double coord_x = MousePos.x - 16;
-            double coord_y = MousePos.y - 16;
-            std::size_t id = MapPtr->BoughtItems[ItemName].size();
 
-            MapPtr->BoughtItems[ItemName].push_back(new BaseElem(coord_x, coord_y, 50, 50, ItemName + "50x50.png"));
-            MapPtr->IsMove = MapPtr->BoughtItems[ItemName].back();
-            MapPtr->IsMove_id = MapPtr->BoughtItems[ItemName].size() - 1;
-            MapPtr->dx = 25, MapPtr->dy = 25;
+            double coord_x = MousePos.x - 25;
+            double coord_y = MousePos.y - 25;
+
+            std::size_t id = MapPtr->CreateStructForNewItem(ItemName, coord_x, coord_y);
 
             soci::transaction tr(sql);
             sql << "insert into objects_on_map values ((:type_id), (:id), (:coord_x), (:coord_y))",

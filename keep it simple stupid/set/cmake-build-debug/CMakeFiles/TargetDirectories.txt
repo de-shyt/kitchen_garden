@@ -1,0 +1,3 @@
+C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/keep it simple stupid/set/cmake-build-debug/CMakeFiles/ferma.dir
+C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/keep it simple stupid/set/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/keep it simple stupid/set/cmake-build-debug/CMakeFiles/rebuild_cache.dir
