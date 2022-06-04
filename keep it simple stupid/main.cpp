@@ -19,6 +19,7 @@ ViewType CheckCurrentView(BaseStruct& Struct, sf::Vector2i& MousePos) {
     return ViewType::Map;
 }
 
+bool online = 0;
 
 int main()
 {
@@ -29,14 +30,18 @@ int main()
 
 
     sf::TcpSocket socket;
-    unsigned short port = 45000;
-    sf::IpAddress ip = "localhost";
+    sf::TcpSocket connection;
+    connection.connect("localhost", 45000);
+    connection.setBlocking(false);
+    std::cout << "Connected" << std::endl;
+//    unsigned short port = 45000;
+//    sf::IpAddress ip = "localhost";
 
     std::vector<sf::Sprite> remotePlayers;
 //    std::vector<std::unique_ptr<CoFarmer>> cofarmers;
 //    std::unique_ptr<Network> network = std::make_unique<Network>(ip, port);
 
-    sf::Vector2f lastDirSent;
+//    sf::Vector2f lastDirSent;
 
     socket.setBlocking(false);
 
@@ -142,6 +147,14 @@ int main()
                     case ViewType::Map:
                         farmer.move(CurrentFrame, time);
                         farmer.update(time, &Map);
+
+                        sf::Packet tmp;
+                        tmp << 3;
+                        tmp << farmer.get_id();
+                        tmp << farmer.dx << farmer.dy;
+                        if(connection.send(tmp) != sf::Socket::Done) {
+                            std::cout << "Error sending data to server" << std::endl;
+                        }
 
                         soci::transaction tr(Map.sql);
 

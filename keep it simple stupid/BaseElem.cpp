@@ -90,7 +90,8 @@ GardenBedElem::GardenBedElem(float x_, float y_, float w_, float h_, std::string
 Player::Player() = default;
 
 
-Player::Player(float x_, float y_, float w_, float h_, float recTop, float recLeft, std::string&& file_name, std::string& player_name) :
+Player::Player(float x_, float y_, float w_, float h_, float recTop, float recLeft,
+               std::string&& file_name, std::string& player_name) :
     BaseElem(x_, y_, w_, h_, std::move(file_name)), name(player_name)
 {
     mSprite.setTextureRect(sf::IntRect(recLeft, recTop, w, h));
