@@ -138,14 +138,10 @@ void Network::receive(std::vector<std::unique_ptr<CoFarmer>>& cofarmers, Player*
 				if (cofarmers[i]->getID() == id)
 				{
 					m_textMessage = "Player " + cofarmers[i]->getName() + " disconnected.";
-					std::cout << "Enemy: " << cofarmers[i]->getID() << " deleted " << std::endl;
+					std::cout << "Farmer: " << cofarmers[i]->getID() << " deleted :( " << std::endl;
                     cofarmers.erase(cofarmers.begin() + i);
 				}
 			}
-		}
-		else if (type == 2)
-		{
-			std::cout << "Server is full" << std::endl;
 		}
 
 		else if (type == 3) // get move direction of enemys
@@ -212,7 +208,7 @@ void Network::receive(std::vector<std::unique_ptr<CoFarmer>>& cofarmers, Player*
 			std::vector<int> playersId;
 
 			receivePacket >> playerNumber;
-			std::cout << "Num of players on server: " << playerNumber << std::endl;
+			std::cout << "Num of players on ferma: " << playerNumber << std::endl;
 
 			for (int i = 0; i < playerNumber; ++i)
 			{
@@ -241,7 +237,7 @@ void Network::receive(std::vector<std::unique_ptr<CoFarmer>>& cofarmers, Player*
 				{
                     cofarmers.push_back(std::make_unique<CoFarmer>(playersId[i], sf::Vector2f(100, 100), playersName[i]));
 					m_textMessage = "New player connected: " + playersName[i];
-					std::cout << "Created a new enemy with id: " << playersId[i] << std::endl;
+					std::cout << "Here is a new farmer with id: " << playersId[i] << std::endl;
 
 				}
 			}

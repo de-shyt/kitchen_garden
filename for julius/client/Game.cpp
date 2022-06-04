@@ -11,8 +11,8 @@ Game::Game()
 	network = std::make_unique<Network>(ipAdress, port);
 
     std::cout << "Enter your name:" << std::flush;
-    std::string name = "abober";
-    std::cin >> name;
+    std::string name = "abober"; // default (doesnt matter)
+//    std::cin >> name;
 	pSprite.setName(name);
 
 	mWindow.create(sf::VideoMode(1920, 1080), "POTATO SIMULATOR");
@@ -65,71 +65,118 @@ void Game::procesEvents()
                         sf::Vector2i MousePos = sf::Mouse::getPosition(mWindow);
                         view = Menu.CheckBoundaries(MousePos);
                     }
+                case sf::Event::MouseButtonReleased:
+                    if (event.mouseButton.button == sf::Mouse::Left) {
+                        if (view == "Map") {
+                            Map.CheckOverlap(MousePos);
+                        }
+                    }
+                    break;
             }
-        } else if(view == "Map")
-            if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+        } else if(view == "Map") {
+            if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 view = "Menu";
+            }
+        } else if(view == "Chat") {
+            if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                view = Chat.CheckBoundaries(MousePos);
+            }
+        }
+
+
+            if(view == "CloseWindow") {
+                mWindow.close();
+                break;
+            }
     }
 
     if(mWindow.hasFocus()) {
         if (view == "Map") {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !movingDiagonal)
-            {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !movingDiagonal) {
                 pSprite.move(0, -2);
                 pSprite.setDirection(sf::Vector2f(0, -2));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !movingDiagonal)
-            {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !movingDiagonal) {
                 pSprite.move(-2, 0);
                 pSprite.setDirection(sf::Vector2f(-2, 0));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !movingDiagonal)
-            {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !movingDiagonal) {
                 pSprite.move(0, 2);
                 pSprite.setDirection(sf::Vector2f(0, 2));
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !movingDiagonal)
-            {
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !movingDiagonal) {
                 pSprite.move(2, 0);
                 pSprite.setDirection(sf::Vector2f(2, 0));
             }
 
 
             //Up Right
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
                 movingDiagonal = true;
                 pSprite.move(1.4, -1.4);
                 pSprite.setDirection(sf::Vector2f(1.4, -1.4));
             }
                 //Up Left
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            {
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
                 movingDiagonal = true;
                 pSprite.move(-1.4, -1.4);
                 pSprite.setDirection(sf::Vector2f(-1.4, -1.4));
             }
                 //Down Right
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            {
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
                 movingDiagonal = true;
                 pSprite.move(1.4, 1.4);
                 pSprite.setDirection(sf::Vector2f(1.4, 1.4));
             }
                 //Down Left
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            {
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
                 movingDiagonal = true;
                 pSprite.move(-1.4, 1.4);
                 pSprite.setDirection(sf::Vector2f(-1.4, 1.4));
-            }
-            else
+            } else
                 movingDiagonal = false;
 
             //IF no button is pressed
-            if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) &&
+                !sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 pSprite.setDirection(sf::Vector2f(0, 0));
         }
+
+            sf::Vector2i MousePos = sf::Mouse::getPosition(mWindow);
+            switch (event.type) {
+                case sf::Event::KeyPressed:
+                    if (event.key.code == sf::Keyboard::Tab) {
+                        if (view == "Map") {
+                            view = "Shop";
+                        } else if (view == "Shop") {
+                            view = "Map";
+                        }
+                    } else if (event.key.code == sf::Keyboard::Escape) {
+                        if (view == "Chat" || view == "Shop") {
+                            view = "Map";
+                        } else if (view == "Map") {
+                            view = "Menu";
+                        }
+                    }
+                    break;
+                case sf::Event::MouseButtonPressed:
+                    if (event.mouseButton.button == sf::Mouse::Left) {
+                        if (view == "Map") {
+                            view = Map.CheckBoundaries(MousePos);
+                        } else if (view == "Shop") {
+                            view = Shop.CheckBoundaries(MousePos);
+                        } else if (view == "Chat") {
+                            view = Chat.CheckBoundaries(MousePos);
+                        } else if (view == "Menu") {
+                            view = Menu.CheckBoundaries(MousePos);
+                        }
+                    }
+                    break;
+                case sf::Event::MouseButtonReleased:
+                    if (event.mouseButton.button == sf::Mouse::Left) {
+                        if (view == "Map") {
+                            Map.CheckOverlap(MousePos);
+                        }
+                    }
+                    break;
+            }
 	}
 }
 
@@ -152,7 +199,6 @@ void Game::update()
         //Recive data from network
         network->receive(cofarmers, &pSprite);
 
-
         for (unsigned int i = 0; i < cofarmers.size(); i++) {
             cofarmers[i]->move(cofarmers[i]->getDirection());
         }
@@ -162,26 +208,28 @@ void Game::update()
 
 void Game::render()
 {
-    std::cout << view << '\n';
-
     if(view == "Menu") {
-        mWindow.clear(sf::Color::Green);
+        mWindow.clear(sf::Color(34, 177, 76));
         Menu.ChangeColor(mWindow);
         Menu.Draw(mWindow);
     }
     if(view == "Map") {
         mWindow.clear();
-        for (int i = 0; i < 20; ++i) {
-            for (int j = 0; j < 20; ++j) {
-                grass_sprite.setTextureRect(sf::IntRect(0, 0, 346, 333));
-                grass_sprite.setPosition(j * 346, i * 333);
-                mWindow.draw(grass_sprite);
-            }
-        }
+        Map.Draw(mWindow);
 
         for (unsigned int i = 0; i < cofarmers.size(); i++)
             mWindow.draw(*cofarmers[i]);
+
         mWindow.draw(pSprite);
+    }
+    if(view == "Chat") {
+        mWindow.clear(sf::Color(34, 177, 76));
+        Chat.Draw(mWindow);
+    }
+    if(view == "Shop") {
+        sf::Vector2i MousePos = sf::Mouse::getPosition(mWindow);
+        Shop.ChangeColor(mWindow, MousePos);
+        Shop.Draw(mWindow);
     }
 
     mWindow.display();

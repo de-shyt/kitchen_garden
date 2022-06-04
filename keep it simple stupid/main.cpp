@@ -68,7 +68,7 @@ int main()
                 float time = Clock.getElapsedTime().asMicroseconds() / 800;
                 Clock.restart();
 
-                sf::Vector2i MousePos = sf::Mouse::getPosition(window);
+
 
                 sf::Event event{};
                 while (window.pollEvent(event)) {

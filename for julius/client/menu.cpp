@@ -2,11 +2,11 @@
 
 
 Menu::Menu() :
-    Continue("C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/for julius/client/CyrilicOld.ttf", 65, sf::Color::White, "Continue"),
-    NewGame("C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/for julius/client/CyrilicOld.ttf", 65, sf::Color::White, "New game"),
+    Continue("C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/for julius/client/CyrilicOld.ttf", 65, sf::Color::White, "Play"),
+    NewGame("C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/for julius/client/CyrilicOld.ttf", 65, sf::Color::White, "Settings"),
     Settings("C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/for julius/client/CyrilicOld.ttf", 65, sf::Color::White, ""
-                                                     "Settings"),
-    Exit("C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/for julius/client/CyrilicOld.ttf", 65, sf::Color::White, "Exit"),
+                                                     "Exit"),
+    Exit("C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/for julius/client/CyrilicOld.ttf", 65, sf::Color::White, ""),
     Carrot(BaseElem(600, -150, 918, 950, "carrot.png"))
 
 {
@@ -108,8 +108,8 @@ std::string Menu::CheckBoundaries(sf::Vector2i& MousePos)
 //        return "Menu";
     }
 
-    if (NewGame.mText.getGlobalBounds().contains(MousePos.x, MousePos.y))
-    {
+//    if (NewGame.mText.getGlobalBounds().contains(MousePos.x, MousePos.y))
+//    {
 //        MapPtr->Clear();
 
 //        soci::transaction tr(sql);
@@ -125,10 +125,10 @@ std::string Menu::CheckBoundaries(sf::Vector2i& MousePos)
 
 //        tr.commit();
 
-        return "Map";
-    }
+//        return "Map";
+//    }
 
-    if (Exit.mText.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
+    if (Settings.mText.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
         return "CloseWindow";
     }
 

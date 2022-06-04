@@ -50,6 +50,8 @@ private:
 
     Map Map;
     Menu Menu;
+    Shop Shop;
+    Chat Chat;
 
     std::string view = "Menu";
 };

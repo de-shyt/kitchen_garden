@@ -74,7 +74,7 @@ struct Map : virtual BaseStruct {
     Map();
     ~Map();
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
-    void Draw(sf::RenderWindow& window, BaseElem& player);
+    void Draw(sf::RenderWindow& window);
     void CheckOverlap(sf::Vector2i& MousePos);
     void Clear();
     int CreateStructForNewItem(std::string& type_id, int coord_x, int coord_y);
