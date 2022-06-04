@@ -6,6 +6,8 @@
 #include <sstream>
 #include <vector>
 #include "Network.h"
+#include "BaseElem.h"
+#include "BaseStruct.h"
 #pragma once
 
 
@@ -39,10 +41,15 @@ private:
 	std::unique_ptr<Network> network;
 
 	sf::Vector2f lastDirSent;
-	bool movingDiagonal;
+	bool movingDiagonal = false;
 
 	sf::Time m_positionTimer;
 
     sf::Texture grass_texture;
     sf::Sprite grass_sprite;
+
+    Map Map;
+    Menu Menu;
+
+    std::string view = "Menu";
 };

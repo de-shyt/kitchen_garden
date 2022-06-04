@@ -6,15 +6,16 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(source
-        Enemy.cpp
-        Enemy.h
+        CoFarmer.cpp
+        CoFarmer.h
         Game.cpp
         Game.h
         main.cpp
         Network.cpp
         Network.h
         Player.cpp
-        Player.h)
+        Player.h
+        BaseElem.cpp Menu.cpp Map.cpp Shop.cpp Chat.cpp TextElem.cpp)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/msys64/mingw64/lib/cmake/SFML)

@@ -71,6 +71,7 @@ struct Map;
 struct Player : BaseElem {
     float dx = 0, dy = 0, speed = 0;
     Direction dir = Direction::Right;
+    Direction dir = Direction::Right;
     std::string name;
 
     int id = -1;
