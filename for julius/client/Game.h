@@ -35,7 +35,7 @@ private:
 	std::vector<sf::Sprite> remotePlayers;
 
 	Player pSprite;
-	std::vector<std::unique_ptr<Enemy>> enemies;
+	std::vector<std::unique_ptr<CoFarmer>> cofarmers;
 	std::unique_ptr<Network> network;
 
 	sf::Vector2f lastDirSent;

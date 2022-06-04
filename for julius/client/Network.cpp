@@ -109,7 +109,7 @@ void Network::getPlayerList(Player* p)
 
 
 
-void Network::receive(std::vector<std::unique_ptr<Enemy>>& enemies, Player* p)
+void Network::receive(std::vector<std::unique_ptr<CoFarmer>>& cofarmers, Player* p)
 {
 
 	sf::Packet receivePacket;
@@ -133,13 +133,13 @@ void Network::receive(std::vector<std::unique_ptr<Enemy>>& enemies, Player* p)
 		}
 		else if (type == 1) // disconnected
 		{
-			for (unsigned int i = 0; i < enemies.size(); i++)
+			for (unsigned int i = 0; i < cofarmers.size(); i++)
 			{
-				if (enemies[i]->getID() == id)
+				if (cofarmers[i]->getID() == id)
 				{
-					m_textMessage = "Player " + enemies[i]->getName() + " disconnected.";
-					std::cout << "Enemy: " << enemies[i]->getID() << " deleted " << std::endl;
-					enemies.erase(enemies.begin() + i);
+					m_textMessage = "Player " + cofarmers[i]->getName() + " disconnected.";
+					std::cout << "Enemy: " << cofarmers[i]->getID() << " deleted " << std::endl;
+                    cofarmers.erase(cofarmers.begin() + i);
 				}
 			}
 		}
@@ -150,15 +150,15 @@ void Network::receive(std::vector<std::unique_ptr<Enemy>>& enemies, Player* p)
 
 		else if (type == 3) // get move direction of enemys
 		{
-			for (unsigned int i = 0; i < enemies.size(); i++)
+			for (unsigned int i = 0; i < cofarmers.size(); i++)
 			{
-				if (enemies[i]->getID() == id)
+				if (cofarmers[i]->getID() == id)
 				{
 					sf::Vector2f dir;
 					receivePacket >> dir.x;
 					receivePacket >> dir.y;
 
-					enemies[i]->setDirection(dir);
+                    cofarmers[i]->setDirection(dir);
 					break;
 				}
 
@@ -167,15 +167,15 @@ void Network::receive(std::vector<std::unique_ptr<Enemy>>& enemies, Player* p)
 		else if (type == 4) //Set player position to the recived position
 		{
 
-			for (unsigned int i = 0; i < enemies.size(); i++)
+			for (unsigned int i = 0; i < cofarmers.size(); i++)
 			{
-				if (enemies[i]->getID() == id)
+				if (cofarmers[i]->getID() == id)
 				{
 					sf::Vector2f pos;
 					receivePacket >> pos.x;
 					receivePacket >> pos.y;
 
-					enemies[i]->setPosition(pos);
+                    cofarmers[i]->setPosition(pos);
 					break;
 				}
 
@@ -189,10 +189,10 @@ void Network::receive(std::vector<std::unique_ptr<Enemy>>& enemies, Player* p)
 			if (!receivedMessage.empty())
 			{
 				std::string senderName;
-				for (unsigned int k = 0; k < enemies.size(); k++)
+				for (unsigned int k = 0; k < cofarmers.size(); k++)
 				{
-					if (enemies[k]->getID() == id)
-						senderName = enemies[k]->getName();
+					if (cofarmers[k]->getID() == id)
+						senderName = cofarmers[k]->getName();
 				}
 				if (id == p->getID())
 					senderName = p->getName();
@@ -229,9 +229,9 @@ void Network::receive(std::vector<std::unique_ptr<Enemy>>& enemies, Player* p)
 			for (unsigned int i = 0; i < playersId.size(); ++i) //loop through id-s we got
 			{
 				bool haveThatEnemy = false;
-				for (unsigned int v = 0; v < enemies.size(); v++) //check if we already have enemy with that id
+				for (unsigned int v = 0; v < cofarmers.size(); v++) //check if we already have enemy with that id
 				{
-					if (enemies[v]->getID() == playersId[i])
+					if (cofarmers[v]->getID() == playersId[i])
 					{
 						haveThatEnemy = true;
 					}
@@ -239,7 +239,7 @@ void Network::receive(std::vector<std::unique_ptr<Enemy>>& enemies, Player* p)
 				}
 				if (playersId[i] != p->getID() && !haveThatEnemy) //if it is not our id and if we dont have that enemy, create a new enemy with that id
 				{
-					enemies.push_back(std::make_unique<Enemy>(playersId[i], sf::Vector2f(100, 100), playersName[i]));
+                    cofarmers.push_back(std::make_unique<CoFarmer>(playersId[i], sf::Vector2f(100, 100), playersName[i]));
 					m_textMessage = "New player connected: " + playersName[i];
 					std::cout << "Created a new enemy with id: " << playersId[i] << std::endl;
 

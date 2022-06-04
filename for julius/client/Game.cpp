@@ -36,7 +36,6 @@ Game::~Game()
 }
 void Game::run()
 {
-    //TODO fix timestep
 	while (mWindow.isOpen())
 	{
 		procesEvents();
@@ -48,7 +47,6 @@ void Game::run()
 
 void Game::procesEvents()
 {
-    //TODO organize events
 	sf::Event event;
 	while (mWindow.pollEvent(event))
 	{
@@ -74,7 +72,6 @@ void Game::procesEvents()
 		}
 	}
 
-    //TODO Organize input, Speed times delta time
 	if (mWindow.hasFocus())
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !movingDiagonal)
@@ -157,12 +154,12 @@ void Game::update()
 	}
 
 	//Recive data from network
-	network->receive(enemies, &pSprite);
+	network->receive(cofarmers, &pSprite);
 
 
-	for (unsigned int i = 0; i < enemies.size(); i++)
+	for (unsigned int i = 0; i < cofarmers.size(); i++)
 	{
-		enemies[i]->move(enemies[i]->getDirection());
+        cofarmers[i]->move(cofarmers[i]->getDirection());
 	}
 
 }
@@ -180,8 +177,8 @@ void Game::render()
         }
     }
 
-	for (unsigned int i = 0; i < enemies.size(); i++)
-		mWindow.draw(*enemies[i]);
+	for (unsigned int i = 0; i < cofarmers.size(); i++)
+		mWindow.draw(*cofarmers[i]);
 	mWindow.draw(pSprite);
 	mWindow.display();
 }
