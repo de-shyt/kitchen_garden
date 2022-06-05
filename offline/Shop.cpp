@@ -15,18 +15,18 @@ Shop::Shop(Map* map_ptr) :
 //------------------------------------------ Items ---------------------------------------------------
 
     Items["garden_bed"] = new BaseElem(0, 0, 360, 360, "garden_bed.png");
-    Items["donut"] = new BaseElem(0, 0, 300, 300, "rock_meme.png");
-    Items["diploma"] = new BaseElem(0, 0, 360, 360, "chuchello.png");
+    Items["rock_meme"] = new BaseElem(0, 0, 300, 300, "rock_meme.png");
+    Items["chuchello"] = new BaseElem(0, 0, 360, 360, "chuchello.png");
 
     int coord = 0;
     for (auto it = Items.begin(); it != Items.end(); it++, coord++) {
         it->second->x = 180 + 400 * (coord % 4);
         it->second->y = 180 + 400 * (coord / 4);
         it->second->mSprite.setPosition(it->second->x, it->second->y);
-        if(it->first == "donut") {
+        if(it->first == "rock_meme") {
             it->second->mSprite.setPosition(it->second->x + 30, it->second->y + 25);
         }
-        if(it->first == "diploma") {
+        if(it->first == "chuchello") {
             it->second->mSprite.setPosition(it->second->x + 45, it->second->y);
         }
     }
