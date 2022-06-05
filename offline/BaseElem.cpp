@@ -55,7 +55,9 @@ GardenBed::GardenBed() : product(nullptr) {}
 
 GardenBed::GardenBed(float x_, float y_, float w_, float h_, std::string&& name, int id_)
         : BaseElem(x_, y_, w_, h_, std::move(name)),
-          id(id_), product(nullptr), cur_fragment(0) {}
+          id(id_), product(nullptr), cur_fragment(0) {
+    mSprite.setScale(3, 3);
+}
 
 
 void GardenBed::ModifyProduct(soci::session& sql)
@@ -179,12 +181,16 @@ GardenBedElem::GardenBedElem() = default;
 
 GardenBedElem::GardenBedElem(float x_, float y_, float w_, float h_, std::string&& name, std::string&& type_id_, int id_)
         : BaseElem(x_, y_, w_, h_, std::move(name)),
-          type_id(std::move(type_id_)), id(id_) {}
+          type_id(std::move(type_id_)), id(id_) {
+    mSprite.setScale(1.5, 1.5);
+}
 
 
 GardenBedElem::GardenBedElem(float x_, float y_, float w_, float h_, std::string&& name, std::string& type_id_, int id_)
         : BaseElem(x_, y_, w_, h_, std::move(name)),
-          type_id(type_id_), id(id_) {}
+          type_id(type_id_), id(id_) {
+    mSprite.setScale(1.5, 1.5);
+}
 
 
 
