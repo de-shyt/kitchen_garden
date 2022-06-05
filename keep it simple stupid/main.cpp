@@ -25,21 +25,6 @@ int main()
     auto CurrentView = ViewType::Menu;
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "POTATO SIMULATOR");
 
-//============================================== SET' ==============================================
-
-
-    sf::TcpSocket socket;
-    unsigned short port = 45000;
-    sf::IpAddress ip = "localhost";
-
-    std::vector<sf::Sprite> remotePlayers;
-//    std::vector<std::unique_ptr<CoFarmer>> cofarmers;
-//    std::unique_ptr<Network> network = std::make_unique<Network>(ip, port);
-
-    sf::Vector2f lastDirSent;
-
-    socket.setBlocking(false);
-
     try
     {
 //============================================== Creating Elems ==============================================
