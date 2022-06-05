@@ -1,13 +1,21 @@
 #include "BaseStruct.h"
+#include <cmath>
 
+int dist(int x1, int y1, int x2, int y2) {
+    return std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+}
 
 BaseStruct::BaseStruct() : sql("postgresql", "dbname=ferma user=postgres password=Julius_Deshur_Theorem") {};
 
-Map::Map() :
+
+Map::Map() = default;
+
+
+Map::Map(Player* player_ptr) :
+        ShopPtr(nullptr), PlayerPtr(player_ptr),
         IsMove(nullptr), dx(0), dy(0),
         BG(BaseElem(0, 0, 2048, 2048, "grassBG.png")), Shop(BaseElem(50, 50, 100, 100, "shop.png")),
         Chat(BaseElem(50, 200, 100, 100, "chat.png")), Pause(BaseElem(1770, 50, 100, 100, "pause.png")) {}
-
 
 
 Map::~Map() {
@@ -22,6 +30,7 @@ Map::~Map() {
 std::string Map::CheckBoundaries(sf::Vector2i& MousePos)
 {
     if (Shop.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
+        ShopPtr->CurrentMode = Mode::BuyItem;
         return "Shop";
     }
     if (Pause.mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
@@ -33,12 +42,19 @@ std::string Map::CheckBoundaries(sf::Vector2i& MousePos)
 
 
     for (auto& GardenBed : GardenBeds) {
-        if (GardenBed->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y)) {
-            IsMove = GardenBed;
-            dx = MousePos.x - GardenBed->mSprite.getPosition().x;
-            dy = MousePos.y - GardenBed->mSprite.getPosition().y;
-            GardenBed->CheckProductCoords();
-            return "Map";
+        if (GardenBed->mSprite.getGlobalBounds().contains(MousePos.x, MousePos.y))
+        {
+            if (GardenBed->dist(PlayerPtr->x, PlayerPtr->y) > 200) {
+                return "Map";
+            }
+
+            if (GardenBed->product == nullptr) {
+                ShopPtr->CurrentMode = Mode::BuyGardenBedPlant;
+                ShopPtr->GardenBedPtr = GardenBed;
+                return "Shop";
+            }
+
+            GardenBed->WishToHarvestCrop(PlayerPtr->x, PlayerPtr->y, this);
         }
     }
 
@@ -69,7 +85,7 @@ void Map::CheckOverlap(sf::Vector2i& MousePos)
     }
 
 
-    /*  TODO
+    /*  // TODO
      * нужно условие типа if Ismove = GardenBed && clock == мало => произошло нажатие на грядку, игрок хочет посадить растение
      *                                             clock == немало => игрок передвигает грядку, проверяем, чтобы не было наездов между объектами
      */
@@ -152,7 +168,8 @@ void Map::Draw(sf::RenderWindow &window, BaseElem& player)
     }
 
     for (auto& GardenBed : GardenBeds) {
-        window.draw(GardenBed->mSprite);
+        GardenBed->ModifyProduct(sql);
+        GardenBed->Draw(window, sql);
     }
 
     for (auto& it : GardenBedPlants) {
@@ -180,6 +197,11 @@ void Map::Clear() {
     BoughtItems.clear();
     GardenBedPlants.clear();
     GardenBeds.clear();
+
+    soci::transaction tr(sql);
+    sql << "delete from objects_on_map";
+    sql << "delete from garden_bed_products";
+    tr.commit();
 }
 
 
@@ -194,7 +216,7 @@ int Map::CreateStructForNewItem(std::string& type_id, int coord_x, int coord_y)
     }
 
     if (std::count(AllGardenBedPlantsNames.begin(), AllGardenBedPlantsNames.end(), type_id) > 0) { // хотим купить растение для грядки
-        int id = GardenBedPlants.size();
+        int id = GardenBedPlants[type_id].size();
         GardenBedPlants[type_id].push_back(new GardenBedElem(coord_x, coord_y, 50, 50, type_id + "50x50.png", type_id, id));
         return id;
     }
@@ -204,4 +226,31 @@ int Map::CreateStructForNewItem(std::string& type_id, int coord_x, int coord_y)
     IsMove = BoughtItems[type_id].back();
     dx = 25, dy = 25;
     return id;
+}
+
+
+bool Map::CheckBalance(std::string& type_id)
+{
+    int cost;
+    sql << "select cost_buy from cost_defaults where type_id=(:type_id)",
+        soci::use(type_id), soci::into(cost);
+    if (Money.balance - cost < 0) {
+        // TODO как-то покрасить спрайт денег
+        return false;
+    }
+    return true;
+}
+
+void Map::ChangeBalance(std::string& type_id)
+{
+    int cost;
+    sql << "select cost_buy from cost_defaults where type_id=(:type_id)",
+            soci::use(type_id), soci::into(cost);
+    Money.balance -= cost;
+
+    int balance = Money.balance;
+    std::string name = PlayerPtr->name;
+    soci::transaction tr(sql);
+    sql << "update players set money=(:balance) where name=(:name)", soci::use(balance), soci::use(name);
+    tr.commit();
 }
