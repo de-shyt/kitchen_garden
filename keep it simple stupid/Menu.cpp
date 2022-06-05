@@ -116,7 +116,6 @@ std::string Menu::CheckBoundaries(sf::Vector2i& MousePos)
         soci::transaction tr(sql);
 
         sql << "delete from players where name=(:playername)", soci::use(playername);
-        sql << "delete from objects_on_map";
 
         PlayerPtr->x = 950;
         PlayerPtr->y = 500;
