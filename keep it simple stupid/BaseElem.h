@@ -2,7 +2,6 @@
 #define FERMA_BASEELEM_H
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Network.hpp>
 #include <sstream>
 #include <fstream>
 #include <string>
@@ -54,35 +53,29 @@ struct GardenBedElem : BaseElem { // растения, живущие на гр�
 };
 
 
+struct Map;
+
 struct GardenBed : BaseElem { // грядка
     int id;
     GardenBedElem* product;
+    int cur_fragment;
 
     GardenBed();
     explicit GardenBed(float x_, float y_, float w_, float h_, std::string&& name, int id_);
-    void CheckProductCoords();
+    void ModifyProduct(soci::session& sql);
+    std::string WishToHarvestCrop(int player_x, int player_y, Map* MapPtr);
+    void Draw(sf::RenderWindow &window, soci::session& sql);
+    int dist(int other_x, int other_y);
 };
 
-
-
-
-struct Map;
 
 struct Player : BaseElem {
     float dx = 0, dy = 0, speed = 0;
     Direction dir = Direction::Right;
-    Direction dir = Direction::Right;
     std::string name;
 
-    int id = -1;
-    unsigned short port = 45000;
-    std::unique_ptr<sf::TcpSocket> socket;
-    sf::Time timeout;
-    bool is_ready = true;
-
     Player();
-    explicit Player(float x_, float y_, float w_, float h_, float recTop, float recLeft,
-                    std::string&& file_name, std::string& player_name);
+    explicit Player(float x_, float y_, float w_, float h_, float recTop, float recLeft, std::string&& file_name, std::string& player_name);
     void InteractionWithMap(Map* MapPtr);
     void update(float time, Map* MapPtr);
     void GoLeft(float &CurrentFrame, float &time);
@@ -90,8 +83,6 @@ struct Player : BaseElem {
     void GoUp(float &CurrentFrame, float &time);
     void GoDown(float &CurrentFrame, float &time);
     void move(float &CurrentFrame, float &time);
-    int get_id() { return id; }
-    void set_id(int ID) { id = ID; is_ready = true; };
 };
 
 #endif //FERMA_BASEELEM_H
