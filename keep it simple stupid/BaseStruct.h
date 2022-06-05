@@ -35,13 +35,17 @@ struct Menu : virtual BaseStruct {
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
 };
 
+enum class Mode { BuyItem, BuyGardenBedPlant };
 
 struct Shop : virtual BaseStruct {
     BaseElem BG;
     BaseElem Close;
     BaseElem Frame;
     std::unordered_map<std::string, BaseElem*> Items;
+    std::unordered_map<std::string, BaseElem*> GardenBedPlants;
     Map* MapPtr;
+    Mode CurrentMode;
+    GardenBed* GardenBedPtr;
 
     Shop();
     explicit Shop(Map* map_ptr);
@@ -58,9 +62,14 @@ struct Map : virtual BaseStruct {
     BaseElem Chat;
     BaseElem Pause;
     Money Money;
+
+    struct Shop* ShopPtr;
+    Player* PlayerPtr;
+
     std::unordered_map<std::string, std::vector<MapElem*>> BoughtItems;
     std::vector<GardenBed*> GardenBeds;
     std::unordered_map<std::string, std::vector<GardenBedElem*>> GardenBedPlants;
+
     BaseElem* IsMove;
     std::string IsMove_type_id;
     int IsMove_id;
@@ -74,12 +83,15 @@ struct Map : virtual BaseStruct {
 
 
     Map();
+    explicit Map(Player* player_ptr);
     ~Map();
     std::string CheckBoundaries(sf::Vector2i& MousePos) override;
     void Draw(sf::RenderWindow& window, BaseElem& player);
     void CheckOverlap(sf::Vector2i& MousePos);
     void Clear();
     int CreateStructForNewItem(std::string& type_id, int coord_x, int coord_y);
+    bool CheckBalance(std::string& type_id);
+    void ChangeBalance(std::string& type_id);
 };
 
 
