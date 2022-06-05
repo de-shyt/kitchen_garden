@@ -113,7 +113,7 @@ void GardenBed::ModifyProduct(soci::session& sql)
 
     product->x = x;
     product->y = y - product->h;
-    product->mSprite.setPosition(product->x, product->y);
+    product->mSprite.setPosition(product->x + 30, product->y + 25);
 }
 
 
