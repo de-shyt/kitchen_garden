@@ -117,8 +117,8 @@ std::string Menu::CheckBoundaries(sf::Vector2i& MousePos)
 
         sql << "delete from players where name=(:playername)", soci::use(playername);
 
-        PlayerPtr->x = 950;
-        PlayerPtr->y = 500;
+        PlayerPtr->x = 600;
+        PlayerPtr->y = 400;
         PlayerPtr->mSprite.setTextureRect(sf::IntRect(2 * 64, 0, 64, 96));
 
         sql << "insert into players values ((:playername), 950, 500, 100)", soci::use(playername);
