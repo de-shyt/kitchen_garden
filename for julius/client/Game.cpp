@@ -15,7 +15,7 @@ Game::Game()
 //    std::cin >> name;
 	pSprite.setName(name);
 
-	mWindow.create(sf::VideoMode(1920, 1080), "POTATO SIMULATOR");
+	mWindow.create(sf::VideoMode(810, 450), "POTATO SIMULATOR");
 	socket.setBlocking(false);
 	mWindow.setFramerateLimit(60);
 
