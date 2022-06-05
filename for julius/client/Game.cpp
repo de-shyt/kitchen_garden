@@ -77,12 +77,21 @@ void Game::procesEvents()
             if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 view = "Menu";
             }
+            else if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                if (view == "Map") {
+                    view = Map.CheckBoundaries(MousePos);
+                }
+            }
+            else if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+                    if (view == "Map") {
+                            Map.CheckOverlap(MousePos);
+                    }
+            }
         } else if(view == "Chat") {
             if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
                 view = Chat.CheckBoundaries(MousePos);
             }
         }
-
 
             if(view == "CloseWindow") {
                 mWindow.close();
@@ -133,7 +142,6 @@ void Game::procesEvents()
             } else
                 movingDiagonal = false;
 
-            //IF no button is pressed
             if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) &&
                 !sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 pSprite.setDirection(sf::Vector2f(0, 0));
@@ -158,9 +166,7 @@ void Game::procesEvents()
                     break;
                 case sf::Event::MouseButtonPressed:
                     if (event.mouseButton.button == sf::Mouse::Left) {
-                        if (view == "Map") {
-                            view = Map.CheckBoundaries(MousePos);
-                        } else if (view == "Shop") {
+                         if (view == "Shop") {
                             view = Shop.CheckBoundaries(MousePos);
                         } else if (view == "Chat") {
                             view = Chat.CheckBoundaries(MousePos);
@@ -227,6 +233,7 @@ void Game::render()
         Chat.Draw(mWindow);
     }
     if(view == "Shop") {
+        std::cout << "in shop\n";
         sf::Vector2i MousePos = sf::Mouse::getPosition(mWindow);
         Shop.ChangeColor(mWindow, MousePos);
         Shop.Draw(mWindow);
