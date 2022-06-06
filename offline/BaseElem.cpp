@@ -60,7 +60,7 @@ GardenBed::GardenBed() : product(nullptr) {}
 GardenBed::GardenBed(float x_, float y_, float w_, float h_, std::string&& name, int id_)
         : BaseElem(x_, y_, w_, h_, std::move(name)),
           id(id_), product(nullptr), cur_fragment(0) {
-    mSprite.setScale(3, 3);
+    mSprite.setScale(1, 1);
 }
 
 
@@ -113,7 +113,7 @@ void GardenBed::ModifyProduct(soci::session& sql)
 
     product->x = x;
     product->y = y - product->h;
-    product->mSprite.setPosition(product->x + 30, product->y + 25);
+    product->mSprite.setPosition(product->x + 30, product->y + 30);
 }
 
 
@@ -207,6 +207,7 @@ Player::Player(float x_, float y_, float w_, float h_, float recTop, float recLe
         BaseElem(x_, y_, w_, h_, std::move(file_name)), name(player_name)
 {
     mSprite.setTextureRect(sf::IntRect(recLeft, recTop, w, h));
+    mSprite.setScale(1.5, 1.5);
 }
 
 
