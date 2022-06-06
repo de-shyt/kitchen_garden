@@ -40,14 +40,14 @@ MapElem::MapElem() = default;
 MapElem::MapElem(float x_, float y_, float w_, float h_, std::string&& name, std::string&& type_id_, int id_)
         : BaseElem(x_, y_, w_, h_, std::move(name)),
           type_id(std::move(type_id_)), id(id_) {
-    mSprite.setScale(2, 2);
+    mSprite.setScale(1, 1);
 }
 
 
 MapElem::MapElem(float x_, float y_, float w_, float h_, std::string&& name, std::string& type_id_, int id_)
         : BaseElem(x_, y_, w_, h_, std::move(name)),
           type_id(type_id_), id(id_) {
-    mSprite.setScale(2, 2);
+    mSprite.setScale(1, 1);
 }
 
 
@@ -113,7 +113,7 @@ void GardenBed::ModifyProduct(soci::session& sql)
 
     product->x = x;
     product->y = y - product->h;
-    product->mSprite.setPosition(product->x + 30, product->y + 30);
+    product->mSprite.setPosition(product->x, product->y);
 }
 
 
@@ -168,12 +168,42 @@ void GardenBed::Draw(sf::RenderWindow &window, soci::session& sql)
 
     if (product != nullptr)
     {
-        product->mSprite.setColor(sf::Color::White);
+        product->mSprite.setPosition(x + 10,y);
         if (cur_fragment == 5) {
             product->mSprite.setColor(sf::Color::Yellow);
         }
-
         window.draw(product->mSprite);
+        product->mSprite.setPosition(x + 10,y + 100);
+        if (cur_fragment == 5) {
+            product->mSprite.setColor(sf::Color::Yellow);
+        }
+        window.draw(product->mSprite);
+        product->mSprite.setPosition(x + 10,y - 100);
+        if (cur_fragment == 5) {
+            product->mSprite.setColor(sf::Color::Yellow);
+        }
+        window.draw(product->mSprite);
+        product->mSprite.setPosition(x + 110,y);
+        if (cur_fragment == 5) {
+            product->mSprite.setColor(sf::Color::Yellow);
+        }
+        window.draw(product->mSprite);
+        product->mSprite.setPosition(x + 110,y + 100);
+        if (cur_fragment == 5) {
+            product->mSprite.setColor(sf::Color::Yellow);
+        }
+        window.draw(product->mSprite);
+        product->mSprite.setPosition(x + 110,y - 100);
+        if (cur_fragment == 5) {
+            product->mSprite.setColor(sf::Color::Yellow);
+        }
+        window.draw(product->mSprite);
+//        product->mSprite.setColor(sf::Color::White);
+//        if (cur_fragment == 5) {
+//            product->mSprite.setColor(sf::Color::Yellow);
+//        }
+//
+//        window.draw(product->mSprite);
     }
 }
 
