@@ -1,3 +1,0 @@
-C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/IM_LITERALLY_DEAD/server/cmake-build-debug/CMakeFiles/source.dir
-C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/IM_LITERALLY_DEAD/server/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/mi/labs_cpp/labs-JuliaKud/ferma/IM_LITERALLY_DEAD/server/cmake-build-debug/CMakeFiles/rebuild_cache.dir
