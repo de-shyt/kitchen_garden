@@ -1,6 +1,6 @@
 <img src="pics_readme/logo.jpg" alt="start" style="zoom:100%;" />
 
-A game for those who would like to have a countryhouse.
+KITCHEN GARDEN is a game for those who would like to have a countryhouse.
 
 
 
