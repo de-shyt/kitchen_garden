@@ -1,4 +1,4 @@
-# Ferma 
+<img src="pics_readme/logo.png" alt="start" style="zoom:100%;" />
 
 A game for those who would like to have a countryhouse.
 
